@@ -1,0 +1,14 @@
+#+TITLE:     Play Framework Examples
+#+AUTHOR:    Martim Lima
+#+EMAIL:     (concat "martim.d.lima" at-sign "protonmail.com")
+#+DATE:      10-10-2020
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:2
+#+PROPERTY: header-args :dir ~/Documents/org/temp
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+-----
+
+* Student API
+
+** [[https://www.baeldung.com/rest-api-with-play][Student Rest API with Play Framework]]
