@@ -9,6 +9,12 @@
 
 -----
 
-* Student API
+* Useful Links
 
-** [[https://www.baeldung.com/rest-api-with-play][Student Rest API with Play Framework]]
+** [[https://www.baeldung.com/java-intro-to-the-play-framework][Introduction To Play]]
+
+** [[https://www.baeldung.com/rest-api-with-play][REST API with Play Framework]]
+
+** [[https://www.baeldung.com/routing-in-play][Routing In Play Applications]]
+
+** [[https://www.baeldung.com/java-play-asynchronous-http-programming][Asynchronous HTTP Programming with Play Framework]]
