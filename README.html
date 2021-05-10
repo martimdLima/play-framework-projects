@@ -1,0 +1,1138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-10 seg 11:32 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Play Framework Examples</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Martim Lima" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Play Framework Examples</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcc83ed5">Introduction</a></li>
+<li><a href="#orgc7d5dea">Create a New Play App</a></li>
+<li><a href="#orgc3c5696">Routing Requests</a></li>
+<li><a href="#org5f1d1fe">Controllers</a></li>
+<li><a href="#orga5be099">Server-Side Templates</a></li>
+<li><a href="#orgf857d92">JSON</a></li>
+<li><a href="#org641d017">Static Assets</a></li>
+<li><a href="#orgaf98013">Asset Compiler</a></li>
+<li><a href="#org672fc2c">Testing</a></li>
+<li><a href="#org63e8684">Configuration</a></li>
+<li><a href="#org9de83c4">Build</a></li>
+<li><a href="#org72054b8">Useful Links</a></li>
+</ul>
+</div>
+</div>
+<hr />
+
+<div id="outline-container-orgcc83ed5" class="outline-2">
+<h2 id="orgcc83ed5">Introduction</h2>
+<div class="outline-text-2" id="text-orgcc83ed5">
+<p>
+The Play Framework is a high velocity web framework for Java and Scala that enables a highly productive workflow but doesn’t sacrifice scalability. Play features a “just-hit-refresh” workflow that enables a rapid development cycle. The compilation and application reloading happens behind the scenes. Play is built for the modern web by being non-blocking, RESTful by default, and having built-in asset compilers for modern client-side technologies like TypeScript, CoffeeScript, LESS, and more.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc7d5dea" class="outline-2">
+<h2 id="orgc7d5dea">Create a New Play App</h2>
+<div class="outline-text-2" id="text-orgc7d5dea">
+<p>
+The easiest way to get started with Play is with Lightbend Starter Projects - a place where you can download sample projects that contains all that you need to get started:
+</p>
+<ul class="org-ul">
+<li><a href="http://developer.lightbend.com/start/?group=play">Play Starter</a></li>
+</ul>
+
+<p>
+Download one of the sample projects.
+</p>
+
+<p>
+Unzip it and run &ldquo;./sbt run” command in your terminal.
+</p>
+
+<p>
+Your new Play application should be running and you should be able to browse to localhost:9000 and see your new application.
+</p>
+
+<p>
+To get to the local documentation for Play, navigate to localhost:9000/@documentation.
+</p>
+
+<p>
+Another way to create a new app is by using the sbt new command. You will need sbt 0.13.15 or newer. To create a new Java project using “sbt new,” you can run the following command:
+</p>
+<ul class="org-ul">
+<li><code>sbt new playframework/play-java-seed.g8</code></li>
+</ul>
+
+<p>
+Or, for a new Scala project:
+</p>
+<ul class="org-ul">
+<li><code>sbt new playframework/play-scala-seed.g8</code></li>
+</ul>
+
+<p>
+After that, you can either use a basic code editor or import your project in IntelliJ or Eclipse by using ScalaIDE.
+</p>
+
+<p>
+Your new project has the following layout:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">DIRECTORY</th>
+<th scope="col" class="org-left">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">app</td>
+<td class="org-left">The app source directory for Java, Scala, and client side source code.</td>
+</tr>
+
+<tr>
+<td class="org-left">conf</td>
+<td class="org-left">The config directory containing the route mapping, application configuration, and log configuration.</td>
+</tr>
+
+<tr>
+<td class="org-left">public</td>
+<td class="org-left">The static assets directory (e.g. images, HTML, CSS, JavaScript).</td>
+</tr>
+
+<tr>
+<td class="org-left">test</td>
+<td class="org-left">The test source directory.</td>
+</tr>
+
+<tr>
+<td class="org-left">project</td>
+<td class="org-left">sbt configuration files.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgc3c5696" class="outline-2">
+<h2 id="orgc3c5696">Routing Requests</h2>
+<div class="outline-text-2" id="text-orgc3c5696">
+<p>
+The conf/routes file defines how Play routes requests based on their HTTP verb and path. When you make a request to <a href="http://localhost:9000">http://localhost:9000</a> your browser makes a GET request with a / path. You can see in the default routes file there is a routing definition to handle that case:
+</p>
+<ul class="org-ul">
+<li><code>GET / controllers.HomeController.index()</code></li>
+</ul>
+
+<p>
+The third parameter is the method (the action) that will be responsible for handling the request and returning a response. The structure of the routes file is:
+</p>
+<ul class="org-ul">
+<li><code>VERB PATH CONTROLLER_CLASS.CONTROLLER_METHOD</code></li>
+</ul>
+<p>
+Only valid HTTP methods are allowed. If you change GET to FOO, you will get a compile error indicating that FOO is not a valid method.
+</p>
+
+<p>
+The path part of the routes file can be parameterized to extract information and pass it to the controller. For instance, to pull an id out of a path, you would do this:
+</p>
+<ul class="org-ul">
+<li><code>GET /user/:id controllers.Users.get(id: Long)</code></li>
+</ul>
+
+<p>
+The &ldquo;:&rdquo; matches on one / separated segment, allowing you to extract multiple values like:
+</p>
+<ul class="org-ul">
+<li><code>GET /user/:id/:name controllers.Users.get(id: Long, name: String)</code></li>
+</ul>
+
+<p>
+You can also extract the rest of the path using a &ldquo;*&rdquo; like this:
+ <code>GET /files/*file controllers.Files.get(file: String)</code>
+Paths can also use regex expressions to limit what they match on.
+</p>
+
+<p>
+Query string parameters can be automatically extracted into controller method parameters. To handle a GET request to /foo?bar=neat, define a route like this:
+</p>
+<ul class="org-ul">
+<li><code>GET /foo controllers.FooController.get(bar: String)</code></li>
+</ul>
+<p>
+The query string parameters are type-safe, so if you set the type as Int, then there will be an error if the parameter cannot be converted to an Int.
+</p>
+
+<p>
+You can also have default and optional parameters.
+</p>
+
+<p>
+One of the reasons that Play compiles the routes file is to provide a reverse routing API so that you never have to hard code URLs into your application. Instead, you call a method in the reverse router, which returns the route defined by the “routes” file. This enables you to easily refactor your URLs without breaking your app.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5f1d1fe" class="outline-2">
+<h2 id="org5f1d1fe">Controllers</h2>
+<div class="outline-text-2" id="text-org5f1d1fe">
+<p>
+Controllers in Play are responsible for handling a request and returning a response. Here is a basic Java controller (which would live in app/controllers/FooController.java):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #d33682; font-weight: bold;">controllers</span>;
+
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Result</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Controller</span>;
+
+<span style="color: #859900; font-weight: bold;">public</span> <span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">FooController</span> <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">Controller</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">Result</span> <span style="color: #268bd2;">get</span><span style="color: #d33682;">()</span> <span style="color: #d33682;">{</span>
+        <span style="color: #859900; font-weight: bold;">return</span> ok<span style="color: #859900;">(</span><span style="color: #2aa198;">"Hello Foo"</span><span style="color: #859900;">)</span>;
+    <span style="color: #d33682;">}</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+<p>
+By extending the base play.mvc.Controller class, we pull in some convenience methods, but doing so is not required. The controller instance is created by using Guice, a dependency injection framework. The get() method returns a play.mvc.Result, which represents the HTTP response. In this case, the response is a status code &ldquo;200 OK&rdquo; response because the ok helper was used to set that status code. There are many other helpers like notFound and badRequest that wrap the general purpose play.mvc.Status API. The response body in this example is just a String, but it could also be HTML content, a stream, a file, etc.
+</p>
+
+<p>
+The corresponding Scala controller is quite similar (and would live in app/controllers/FooController.scala):
+</p>
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #2aa198;">controllers</span>
+<span style="color: #859900; font-weight: bold;">import</span> javax.inject.<span style="color: #d33682; font-weight: bold;">Inject</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.mvc.<span style="color: #d33682; font-weight: bold;">BaseController</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.mvc.<span style="color: #d33682; font-weight: bold;">ControllerComponents</span>
+
+<span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">FooController</span> <span style="color: #cb4b16; font-weight: bold;">@Inject</span>()(<span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">controllerComponents</span><span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">ControllerComponents</span>) <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">BaseController</span> {
+    <span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">get</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Action</span> {
+        <span style="color: #d33682; font-weight: bold;">Ok</span>(&amp;quot;<span style="color: #d33682; font-weight: bold;">Hello</span> foo&amp;quot;)
+    }
+}
+</pre>
+</div>
+
+
+<p>
+The primary difference with this Scala example is that the controller returns an Action which holds a function that takes a request (optionally specified) and returns a response. Just as the Java controller, by default, we use dependency injection to create an instance of the controller. It can be provided by Guice or it can use compile-time Dependency Injection. The controllerComponents instance injected has a number of built-in utilities so that we can have simpler controllers, but as long as you have an Action, it will work.
+</p>
+
+<p>
+The Controller class (in the Java API) has some convenience methods to interact with the other parts of the request and response:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">METHOD</th>
+<th scope="col" class="org-left">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">ctx()</td>
+<td class="org-left">Returns the HTTP context, which can be used to retrieve and store data relevant to the current request.</td>
+</tr>
+
+<tr>
+<td class="org-left">flash(), flash(String key), and flash(String key, String value)</td>
+<td class="org-left">Can be used to access a state that is only available for a single request after the current one (this is useful for displaying messages after a redirect).</td>
+</tr>
+
+<tr>
+<td class="org-left">session(), session(String key), session(String key, String value)</td>
+<td class="org-left">Can be used to access the session state which is backed by a cookie.</td>
+</tr>
+
+<tr>
+<td class="org-left">request()</td>
+<td class="org-left">Return the current HTTP request object, which can be used for reading HTTP request headers, body, and any other data related to the request.</td>
+</tr>
+
+<tr>
+<td class="org-left">response()</td>
+<td class="org-left">Returns the current HTTP response object, which can be used to set cookies, HTTP headers, etc.</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+In the Scala API, these types of operations are done either on the Action function’s optional request parameter or on the Result, for example:
+</p>
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">get</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Action</span> { request <span style="color: #859900; font-weight: bold;">=&gt;</span>
+  <span style="color: #d33682; font-weight: bold;">Ok</span>(<span style="color: #2aa198;">"Hello"</span>)
+    .withHeaders(<span style="color: #2aa198;">"Foo"</span> -&gt; <span style="color: #2aa198;">"bar"</span>)
+    .withSession(<span style="color: #2aa198;">"SessionFoo"</span> -&gt; <span style="color: #2aa198;">"The-value"</span>)
+}
+</pre>
+</div>
+
+
+<p>
+There are other response helper methods that you can use depending on the HTTP Status code you need to be returned:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">HTTP STATUS</th>
+<th scope="col" class="org-left">JAVA</th>
+<th scope="col" class="org-left">SCALA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">200 OK</td>
+<td class="org-left">ok</td>
+<td class="org-left">Ok</td>
+</tr>
+
+<tr>
+<td class="org-left">201 Created</td>
+<td class="org-left">created()</td>
+<td class="org-left">Created</td>
+</tr>
+
+<tr>
+<td class="org-left">301 Moved Permanently</td>
+<td class="org-left">movedPermanently</td>
+<td class="org-left">MovedPermanently</td>
+</tr>
+
+<tr>
+<td class="org-left">302 Found</td>
+<td class="org-left">found</td>
+<td class="org-left">Found</td>
+</tr>
+
+<tr>
+<td class="org-left">303 See Other</td>
+<td class="org-left">seeOther or redirect</td>
+<td class="org-left">SeeOther</td>
+</tr>
+
+<tr>
+<td class="org-left">307 Temporary Redirect</td>
+<td class="org-left">temporaryRedirect</td>
+<td class="org-left">TemporaryRedirect</td>
+</tr>
+
+<tr>
+<td class="org-left">308 Permanent Redirect</td>
+<td class="org-left">permanentRedirect</td>
+<td class="org-left">PermanentRedirect</td>
+</tr>
+
+<tr>
+<td class="org-left">404 Not Found</td>
+<td class="org-left">notFound</td>
+<td class="org-left">NotFound</td>
+</tr>
+
+<tr>
+<td class="org-left">406 Not Acceptable</td>
+<td class="org-left">notAcceptable</td>
+<td class="org-left">NotAcceptable</td>
+</tr>
+
+<tr>
+<td class="org-left">415 Unsupported Media Type</td>
+<td class="org-left">unsupportedMediaType</td>
+<td class="org-left">UnsupportedMediaType</td>
+</tr>
+
+<tr>
+<td class="org-left">500 Internal Server Error</td>
+<td class="org-left">internalServerError</td>
+<td class="org-left">InternalServerError</td>
+</tr>
+
+<tr>
+<td class="org-left">Any status</td>
+<td class="org-left">status(413, “Oops&ldquo;)</td>
+<td class="org-left">Status(413)(&ldquo;Oops&rdquo;)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+Controllers in Play are internally asynchronous and non-blocking, and there is support for using non-blocking APIs in a more idiomatic way. For example, you can just return a Result directly, as shown before, or your actions can return CompletableFuture&lt;Result&gt;:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">CompletableFuture</span><span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">Result</span><span style="color: #268bd2;">&gt;</span> <span style="color: #268bd2;">getAsync</span><span style="color: #268bd2;">()</span> <span style="color: #268bd2;">{</span>
+  <span style="color: #405A61;">// </span><span style="color: #405A61;">Some async API call</span>
+  <span style="color: #b58900;">CompletableFuture</span><span style="color: #d33682;">&lt;</span><span style="color: #b58900;">String</span><span style="color: #d33682;">&gt;</span> <span style="color: #6c71c4;">asyncApiResponse</span> = someAsyncApi<span style="color: #d33682;">()</span>;
+  <span style="color: #859900; font-weight: bold;">return</span> asyncApiResponse.thenApply<span style="color: #d33682;">(</span>value -&gt; ok<span style="color: #859900;">(</span><span style="color: #2aa198;">"Api Result: "</span> + value<span style="color: #859900;">)</span><span style="color: #d33682;">)</span>;
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+
+<p>
+In Scala, there is Action.async to better integrate with APIs returning a Future:
+</p>
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">getAsync</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Action</span>.async {
+  <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">asyncApiResponse</span><span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">Future</span>[<span style="color: #d33682; font-weight: bold;">String</span>] <span style="color: #859900; font-weight: bold;">=</span> someAsyncApi()
+  asyncApiResponse.map(value <span style="color: #859900; font-weight: bold;">=&gt;</span> <span style="color: #d33682; font-weight: bold;">Ok</span>(<span style="color: #2aa198;">"Api Result: "</span> + value))
+}
+</pre>
+</div>
+
+
+<p>
+Interceptors can be added to controllers in order to add security, logging, caching, and other custom behaviors. This is called Action Composition. In Play’s Java API, annotations are used to add the interceptors. In Scala, Action Composition is achieved through functional composition.
+</p>
+
+<p>
+Controllers go much deeper than the typical request and response handling. For instance, a controller can return a stream or it can be used to setup a push connection (Comet, EventSource, WebSocket, etc). Controllers can also handle more than just HTML; they can be used for JSON, binary files, or any content type using custom Body Parsers.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga5be099" class="outline-2">
+<h2 id="orga5be099">Server-Side Templates</h2>
+<div class="outline-text-2" id="text-orga5be099">
+<p>
+Web applications can use server-side templates as a way to create HTML content. In Play, the default server-side templating system is Twirl. There are also numerous other plugins that support a large variety of other templating systems. To use the Scala templates, create a something.scala.html file in the app/views directory. The naming of the file is used to name the function that will be called to render the template:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">PATH</th>
+<th scope="col" class="org-left">BECOMES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">app/views/foo.scala.html</td>
+<td class="org-left">views.html.foo()</td>
+</tr>
+
+<tr>
+<td class="org-left">app/views/users/show.scala.html</td>
+<td class="org-left">views.html.users.show()</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+To use the compiled template from Java, simply call the render static method:
+</p>
+<div class="org-src-container">
+<pre class="src src-java">views.html.foo.render<span style="color: #268bd2;">()</span>
+</pre>
+</div>
+
+<p>
+From Scala, use the apply function:
+</p>
+<div class="org-src-container">
+<pre class="src src-scala">views.html.foo()
+</pre>
+</div>
+
+<p>
+Templates can take parameters, so the (optional) first line of a Scala template is the parameters. Every Scala statement in a Scala template is prefixed with an @, so to specify that a template takes a String parameter, use the following:
+</p>
+<div class="org-src-container">
+<pre class="src src-java">@<span style="color: #268bd2;">(</span>message: String<span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<p>
+The body of the template is just a combination of “@” prefixed Scala statements and raw HTML. For instance:
+</p>
+<div class="org-src-container">
+<pre class="src src-java">@<span style="color: #268bd2;">(</span>title: String, message: String<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">html</span><span style="color: #268bd2;">&gt;</span>
+    <span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">head</span><span style="color: #268bd2;">&gt;</span>
+        <span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">title</span><span style="color: #268bd2;">&gt;</span><span style="color: #b58900;">@title</span><span style="color: #268bd2;">&lt;</span>/title<span style="color: #268bd2;">&gt;</span>
+    <span style="color: #268bd2;">&lt;</span>/head<span style="color: #268bd2;">&gt;</span>
+    <span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">body</span><span style="color: #268bd2;">&gt;</span>
+        <span style="color: #268bd2;">&lt;</span><span style="color: #b58900;">h1</span><span style="color: #268bd2;">&gt;</span><span style="color: #b58900;">@message</span><span style="color: #268bd2;">&lt;</span>/h1<span style="color: #268bd2;">&gt;</span>
+    <span style="color: #268bd2;">&lt;</span>/body<span style="color: #268bd2;">&gt;</span>
+<span style="color: #268bd2;">&lt;</span>/html<span style="color: #268bd2;">&gt;</span>
+</pre>
+</div>
+
+<p>
+Since the Scala templates are compiled into functions, they are easily composed. If the previous example is named main.scala.html, then to reuse it from within another template, simply do this:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #d33682; font-weight: bold;">@main</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"My Page Title"</span>, &#8220;Some message<span style="color: #b58900;">"</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+
+<p>
+Typical template operations like loops just use normal Scala expressions, like so:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #268bd2;">@for</span><span style="color: #268bd2;">(</span>name &lt;- names<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #d33682;">&lt;</span><span style="color: #b58900;">li</span><span style="color: #d33682;">&gt;</span><span style="color: #b58900;">@name</span><span style="color: #d33682;">&lt;</span>/li<span style="color: #d33682;">&gt;</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+<p>
+A conditional “if” statement would look like:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #268bd2;">@if</span><span style="color: #268bd2;">(</span>names.<span style="color: #b58900;">isEmpty</span><span style="color: #d33682;">()</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #d33682;">&lt;</span><span style="color: #b58900;">h1</span><span style="color: #d33682;">&gt;</span>Nothing to <span style="color: #b58900;">display</span><span style="color: #d33682;">&lt;</span>/h1<span style="color: #d33682;">&gt;</span>
+<span style="color: #268bd2;">}</span> <span style="color: #859900; font-weight: bold;">else</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #d33682;">&lt;</span><span style="color: #b58900;">h1</span><span style="color: #d33682;">&gt;</span>@<span style="color: #d33682;">{</span>names.size<span style="color: #859900;">()</span><span style="color: #d33682;">}</span> names<span style="color: #cb4b16; font-weight: bold;">!</span><span style="color: #d33682;">&lt;</span>/h1<span style="color: #d33682;">&gt;</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+<p>
+The Scala templates include a number of other features and patterns, like reusable HTML components, including forms via the @form function. One of the huge benefits of the Scala templates is that you will see compile errors in your browser just like you do with controllers, routes, and everything else that is compiled by Play.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgf857d92" class="outline-2">
+<h2 id="orgf857d92">JSON</h2>
+<div class="outline-text-2" id="text-orgf857d92">
+<p>
+In addition to regular HTML content, Play controllers can also receive and return JSON serialized data. The Play Java API wraps the popular Jackson library with some convenience functions. Here is an example Java controller that has actions to get a User from somewhere (a database, for example) and transform it to JSON, and another action to receive a JSON, parse it to a User object, and save it. Let’s first assume that we have the following model:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #d33682; font-weight: bold;">models</span>;
+
+<span style="color: #859900; font-weight: bold;">public</span> <span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">User</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">String</span> <span style="color: #6c71c4;">name</span>;
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">String</span> <span style="color: #6c71c4;">email</span>;
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+<p>
+And then the controller:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #d33682; font-weight: bold;">controllers</span>;
+
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">models</span>.<span style="color: #b58900;">User</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">libs</span>.<span style="color: #b58900;">Json</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Result</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Controller</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">com</span>.<span style="color: #d33682; font-weight: bold;">fasterxml</span>.<span style="color: #d33682; font-weight: bold;">jackson</span>.<span style="color: #d33682; font-weight: bold;">databind</span>.<span style="color: #b58900;">JsonNode</span>;
+
+<span style="color: #859900; font-weight: bold;">public</span> <span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">UsersController</span> <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">Controller</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">Result</span> <span style="color: #268bd2;">get</span><span style="color: #d33682;">(</span><span style="color: #b58900;">Long</span> <span style="color: #6c71c4;">id</span><span style="color: #d33682;">)</span> <span style="color: #d33682;">{</span>
+        <span style="color: #b58900;">User</span> <span style="color: #6c71c4;">user</span> = getUserFromSomewhere<span style="color: #859900;">(</span>id<span style="color: #859900;">)</span>;
+            <span style="color: #859900; font-weight: bold;">return</span> ok<span style="color: #859900;">(</span>Json.toJson<span style="color: #268bd2;">(</span>user<span style="color: #268bd2;">)</span><span style="color: #859900;">)</span>;
+    <span style="color: #d33682;">}</span>
+
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">Result</span> <span style="color: #268bd2;">save</span><span style="color: #d33682;">()</span> <span style="color: #d33682;">{</span>
+        <span style="color: #b58900;">JsonNode</span> <span style="color: #6c71c4;">json</span> = request<span style="color: #859900;">()</span>.body<span style="color: #859900;">()</span>.asJson<span style="color: #859900;">()</span>;
+        <span style="color: #b58900;">User</span> <span style="color: #6c71c4;">user</span> = Json.fromJson<span style="color: #859900;">(</span>json, User.<span style="color: #859900; font-weight: bold;">class</span><span style="color: #859900;">)</span>;
+        saveUserSomehow<span style="color: #859900;">(</span>user<span style="color: #859900;">)</span>;
+        <span style="color: #859900; font-weight: bold;">return</span> created<span style="color: #859900;">(</span><span style="color: #2aa198;">"User was created"</span><span style="color: #859900;">)</span>;
+    <span style="color: #d33682;">}</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+
+<p>
+The same thing in Scala works in a similar way, but uses a macro-based API to generate the serializer and de-serializer at compile time, thus avoiding the use of runtime reflection. Again, let’s first create a model class:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #d33682; font-weight: bold;">models</span>
+<span style="color: #859900; font-weight: bold;">case</span> <span style="color: #859900; font-weight: bold;">class</span> User<span style="color: #268bd2;">(</span>name: String, email: String<span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #2aa198;">controllers</span>
+<span style="color: #859900; font-weight: bold;">import</span> models.<span style="color: #859900; font-weight: bold;">_</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.mvc.<span style="color: #859900; font-weight: bold;">_</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.libs.json.<span style="color: #d33682; font-weight: bold;">Json</span>
+
+<span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">UsersController</span>(<span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">controllerComponents</span><span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">ControllerComponents</span>) <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">BaseController</span> {
+    <span style="color: #268bd2;">implicit</span> <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">userFormat</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Json</span>.format[<span style="color: #d33682; font-weight: bold;">User</span>]
+
+    <span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">get</span>(id<span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">Long</span>) <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Action</span> {
+        <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">user</span><span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">User</span> <span style="color: #859900; font-weight: bold;">=</span> getUserFromSomewhere(id)
+        <span style="color: #d33682; font-weight: bold;">Ok</span>(<span style="color: #d33682; font-weight: bold;">Json</span>.toJson(user))
+    }
+
+    <span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">save</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">Action</span>(parse.json) { request <span style="color: #859900; font-weight: bold;">=&gt;</span>
+        <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">user</span> <span style="color: #859900; font-weight: bold;">=</span> request.body.<span style="color: #859900; font-weight: bold;">as</span>[<span style="color: #d33682; font-weight: bold;">User</span>]
+        saveUser(user)
+        <span style="color: #d33682; font-weight: bold;">Created</span>(<span style="color: #2aa198;">"User was created"</span>)
+    }
+}
+</pre>
+</div>
+<p>
+These examples show serializing and de-serializing an object. Both the Java and Scala APIs in Play have methods for traversing a JSON structure to locate and extract data, as well as methods to create and manipulate JSON structures.
+</p>
+
+<p>
+To set up routing to either of these controller methods, add the following to your routes file:
+</p>
+<div class="org-src-container">
+<pre class="src src-java">GET /users/:id <span style="color: #d33682; font-weight: bold;">controllers</span>.UsersController.get<span style="color: #268bd2;">(</span>id: Long<span style="color: #268bd2;">)</span>
+POST /users <span style="color: #d33682; font-weight: bold;">controllers</span>.UsersControllers.save
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org641d017" class="outline-2">
+<h2 id="org641d017">Static Assets</h2>
+<div class="outline-text-2" id="text-org641d017">
+<p>
+The public directory contains static assets that do not need to go through a compilation process to be used in the browser. There is a default mapping in the conf/routes file that sets up a way to serve these assets from the <i>assets</i> URL prefix using Play’s built-in Assets controller:
+</p>
+<div class="org-src-container">
+<pre class="src src-java">GET /assets<span style="color: #405A61;">/*</span><span style="color: #405A61;">file controllers.Assets.at(path="public", file)</span>
+</pre>
+</div>
+
+<p>
+At first glance, it seems that these assets are being read directly out of the file system. However, doing so would make Play applications more difficult to deploy since Play uses a container-less deployment model that is ultimately just a bunch of jar files. Instead, Play’s built-in Assets controller serves assets from within the Java classpath. The public directory is actually a source directory that puts its contents into a public package in the classpath (or generated jar file when creating a distribution).
+</p>
+
+<p>
+To load an asset via a server-side template, use the reverse router to get the right URL, like so:
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #268bd2;">img</span> <span style="color: #6c71c4;">src</span>=<span style="color: #2aa198;">"@routes.Assets.at("</span>images/favicon.png<span style="color: #2aa198;">")"</span> &gt;
+</pre>
+</div>
+<p>
+Given the previous routing definition, the reverse router will resolve that to the /assets/images/favicon.png path
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgaf98013" class="outline-2">
+<h2 id="orgaf98013">Asset Compiler</h2>
+<div class="outline-text-2" id="text-orgaf98013">
+<p>
+Play has an Asset Compiler built-in that will compile client-side assets like CoffeeScript and LESS as part of the normal compilation process. This process will also minify JavaScript resources to reduce their size. Assets to be compiled go in either the app/assets/javascripts or app/assets/stylesheets directory. For example, a new app/assets/javascripts/index.coffee file will be compiled and added to the classpath as assets/javascripts/index.js and minified as assets/stylesheets/index.min.js. To load the minified JavaScript via a server-side template, use
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #268bd2;">script</span>=&#8220;@routes.Assets.versioned(&#8220;javascripts/index.js<span style="color: #2aa198;">")"</span>&gt;&lt;/<span style="color: #268bd2;">script</span>&gt;
+</pre>
+</div>
+<p>
+For production distributions, Play will also do JavaScript concatenation. There are a number of other open source asset compiler plugins for Play. Check out the sbt-web plugins list.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org672fc2c" class="outline-2">
+<h2 id="org672fc2c">Testing</h2>
+<div class="outline-text-2" id="text-org672fc2c">
+<p>
+The test directory contains the unit, functional, and integration tests for your project. You can write your tests with any framework that has a JUnit compatible test runner. Play has some specific helpers for JUnit: Specs2 (a Scala testing framework) and ScalaTest (another Scala testing framework). You can test different parts of a Play application independently without starting a server, or your tests can also start a Play server, make actual requests against the server, and test the UI with Selenium through a fake browser (HTMLUnit) or through a real browser (Chrome, Firefox, etc). Here is a simple Java and JUnit test of a controller:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #d33682; font-weight: bold;">controllers</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">org</span>.<span style="color: #d33682; font-weight: bold;">junit</span>.<span style="color: #b58900;">Test</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #b58900;">Application</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">inject</span>.<span style="color: #d33682; font-weight: bold;">guice</span>.<span style="color: #b58900;">GuiceApplicationBuilder</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Http</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #b58900;">Result</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">test</span>.<span style="color: #b58900;">WithApplication</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #859900; font-weight: bold;">static</span> <span style="color: #d33682; font-weight: bold;">org</span>.<span style="color: #d33682; font-weight: bold;">junit</span>.Assert.<span style="color: #b58900;">assertEquals</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #859900; font-weight: bold;">static</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">mvc</span>.<span style="color: #d33682; font-weight: bold;">Http</span>.<span style="color: #d33682; font-weight: bold;">Status</span>.<span style="color: #b58900;">OK</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #859900; font-weight: bold;">static</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">test</span>.<span style="color: #d33682; font-weight: bold;">Helpers</span>.<span style="color: #b58900;">GET</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #859900; font-weight: bold;">static</span> <span style="color: #d33682; font-weight: bold;">play</span>.<span style="color: #d33682; font-weight: bold;">test</span>.Helpers.<span style="color: #b58900;">route</span>;
+
+<span style="color: #859900; font-weight: bold;">public</span> <span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">HomeControllerTest</span> <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">WithApplication</span> <span style="color: #268bd2;">{</span>
+
+    <span style="color: #d33682; font-weight: bold;">@Test</span>
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">void</span> <span style="color: #268bd2;">testIndex</span><span style="color: #d33682;">()</span> <span style="color: #d33682;">{</span>
+        <span style="color: #d33682; font-weight: bold;">Http</span>.<span style="color: #b58900;">RequestBuilder</span> <span style="color: #6c71c4;">request</span> = <span style="color: #859900; font-weight: bold;">new</span> <span style="color: #d33682; font-weight: bold;">Http</span>.<span style="color: #b58900;">RequestBuilder</span><span style="color: #859900;">()</span>.method<span style="color: #859900;">(</span>GET<span style="color: #859900;">)</span>.uri<span style="color: #859900;">(</span><span style="color: #2aa198;">"/"</span><span style="color: #859900;">)</span>;
+
+        <span style="color: #405A61;">// </span><span style="color: #405A61;">app variable is provided by WithApplication.</span>
+        <span style="color: #b58900;">Result</span> <span style="color: #6c71c4;">result</span> = route<span style="color: #859900;">(</span>app, request<span style="color: #859900;">)</span>;
+        assertEquals<span style="color: #859900;">(</span>OK, result.status<span style="color: #268bd2;">()</span><span style="color: #859900;">)</span>;
+    <span style="color: #d33682;">}</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+
+<p>
+The same thing with Scala and ScalaTest would be
+</p>
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">package</span> <span style="color: #2aa198;">controllers</span>
+<span style="color: #859900; font-weight: bold;">import</span> org.scalatestplus.play.<span style="color: #859900; font-weight: bold;">_</span>
+<span style="color: #859900; font-weight: bold;">import</span> org.scalatestplus.play.guice.<span style="color: #859900; font-weight: bold;">_</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.test.<span style="color: #859900; font-weight: bold;">_</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.test.<span style="color: #d33682; font-weight: bold;">Helpers</span>.<span style="color: #859900; font-weight: bold;">_</span>
+
+<span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">HomeControllerSpec</span> <span style="color: #859900; font-weight: bold;">extends</span> <span style="color: #b58900;">PlaySpec</span> <span style="color: #859900; font-weight: bold;">with</span> <span style="color: #b58900;">GuiceOneAppPerTest</span> {
+  <span style="color: #2aa198;">"HomeController GET"</span> should {
+    <span style="color: #2aa198;">"render the index page from the router"</span> in {
+      <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">request</span> <span style="color: #859900; font-weight: bold;">=</span> <span style="color: #d33682; font-weight: bold;">FakeRequest</span>(<span style="color: #d33682; font-weight: bold;">GET</span>, <span style="color: #2aa198;">"/"</span>)
+      <span style="color: #859900; font-weight: bold;">val</span> <span style="color: #6c71c4;">home</span> <span style="color: #859900; font-weight: bold;">=</span> route(app, request).get
+      status(home) mustBe <span style="color: #d33682; font-weight: bold;">OK</span>
+      contentType(home) mustBe <span style="color: #d33682; font-weight: bold;">Some</span>(<span style="color: #2aa198;">"text/html"</span>)
+      contentAsString(home) must include (<span style="color: #2aa198;">"Welcome to Play"</span>)
+    }
+  }
+}
+</pre>
+</div>
+<p>
+You can run the tests either using your IDE or from the command line using sbt test. See more about how to run tests with sbt here.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org63e8684" class="outline-2">
+<h2 id="org63e8684">Configuration</h2>
+<div class="outline-text-2" id="text-org63e8684">
+<p>
+The conf/application.conf file contains your application’s default configuration. There, you can override config or define your own. For instance, if you want to create a new config parameter named “foo” with a value of bar, you would simply add the following to the file:
+</p>
+<pre class="example">
+foo = bar
+</pre>
+
+<p>
+To read that config in Java, you need to inject a Config object:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">javax</span>.<span style="color: #d33682; font-weight: bold;">inject</span>.<span style="color: #b58900;">Inject</span>;
+<span style="color: #859900; font-weight: bold;">import</span> <span style="color: #d33682; font-weight: bold;">com</span>.<span style="color: #d33682; font-weight: bold;">typesafe</span>.<span style="color: #d33682; font-weight: bold;">config</span>.<span style="color: #b58900;">Config</span>;
+
+<span style="color: #859900; font-weight: bold;">public</span> <span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">FooReader</span> <span style="color: #268bd2;">{</span>
+    <span style="color: #859900; font-weight: bold;">private</span> <span style="color: #859900; font-weight: bold;">final</span> <span style="color: #b58900;">Config</span> <span style="color: #6c71c4;">config</span>;
+
+    <span style="color: #d33682; font-weight: bold;">@Inject</span>
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #268bd2;">FooReader</span><span style="color: #d33682;">(</span><span style="color: #b58900;">Config</span> <span style="color: #6c71c4;">config</span><span style="color: #d33682;">)</span> <span style="color: #d33682;">{</span>
+        <span style="color: #859900; font-weight: bold;">this</span>.config = config;
+    <span style="color: #d33682;">}</span>
+
+    <span style="color: #859900; font-weight: bold;">public</span> <span style="color: #b58900;">String</span> <span style="color: #268bd2;">getFoo</span><span style="color: #d33682;">()</span> <span style="color: #d33682;">{</span>
+        <span style="color: #859900; font-weight: bold;">return</span> <span style="color: #859900; font-weight: bold;">this</span>.config.getString<span style="color: #859900;">(</span><span style="color: #2aa198;">"foo"</span><span style="color: #859900;">)</span>;
+    <span style="color: #d33682;">}</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+
+<p>
+In Scala, things are similar, except you need to inject play.api.Configuration instead:
+</p>
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #859900; font-weight: bold;">import</span> javax.inject.<span style="color: #d33682; font-weight: bold;">Inject</span>
+<span style="color: #859900; font-weight: bold;">import</span> play.api.<span style="color: #d33682; font-weight: bold;">Configuration</span>
+
+<span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">FooReeader</span> <span style="color: #cb4b16; font-weight: bold;">@Inject</span>()(config<span style="color: #859900; font-weight: bold;">:</span> <span style="color: #b58900;">Configuration</span>) {
+  <span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">foo</span> <span style="color: #859900; font-weight: bold;">=</span> config.get[<span style="color: #d33682; font-weight: bold;">String</span>](<span style="color: #2aa198;">"foo"</span>)
+}
+</pre>
+</div>
+<p>
+You can specify additional config files to deal with configuration that varies between environments. Play’s config system is built on the Typesafe Config library. See more about how Play uses it here.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9de83c4" class="outline-2">
+<h2 id="org9de83c4">Build</h2>
+<div class="outline-text-2" id="text-org9de83c4">
+<p>
+Play uses the sbt build tool for managing dependencies, compiling the app, running the app, running the tests, and packaging the app. The project/build.properties file specifies the version of sbt to use. Any sbt plugins can be added in the project/plugins.sbt file. The primary build definition is in the build.sbt file, which will look something like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span style="color: #6c71c4;">name :</span>= <span style="color: #2aa198;">"your-project-name"</span>
+<span style="color: #6c71c4;">organization :</span>= <span style="color: #2aa198;">"com.acme"</span>
+<span style="color: #6c71c4;">version :</span>= <span style="color: #2aa198;">"1.0-SNAPSHOT"</span>
+<span style="color: #6c71c4;">lazy val root</span> = (project in file(<span style="color: #2aa198;">"."</span>)).enablePlugins(PlayJava)
+<span style="color: #6c71c4;">scalaVersion :</span>= <span style="color: #2aa198;">"2.12.3"</span>
+<span style="color: #6c71c4;">libraryDependencies +</span>= guice
+</pre>
+</div>
+<p>
+Note: For Scala projects, make sure to use PlayScala instead of PlayJava when enabling plugins. This changes some defaults in Play’s template compiler to make it more idiomatic Scala.
+</p>
+
+<p>
+The libraryDependencies section of the build.sbt defines the application dependencies that should be available in a public Maven repository. You can also add your own Maven repository using the resolvers setting. The dependencies in libraryDependencies are a comma-separated list in this form:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span style="color: #6c71c4;">libraryDependencies +</span>= <span style="color: #2aa198;">"group"</span> % <span style="color: #2aa198;">"artifact"</span> % <span style="color: #2aa198;">"version"</span>
+</pre>
+</div>
+
+<p>
+As an example, to add the MySQL driver, add the following line:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span style="color: #6c71c4;">libraryDependencies +</span>= <span style="color: #2aa198;">"mysql"</span> % <span style="color: #2aa198;">"mysql-connector-java"</span> % <span style="color: #2aa198;">"6.0.6"</span>
+</pre>
+</div>
+
+<p>
+Play has a number of optional dependencies with shortcut aliases:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">DEPENDENCY</th>
+<th scope="col" class="org-left">JAVA</th>
+<th scope="col" class="org-left">SCALA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">JDBC Connection Pool and APIs</td>
+<td class="org-left">jdbc</td>
+<td class="org-left">javaJdbc</td>
+</tr>
+
+<tr>
+<td class="org-left">Cache API</td>
+<td class="org-left">ehcache (or cacheApi)</td>
+<td class="org-left">ehcache (or cacheApi)</td>
+</tr>
+
+<tr>
+<td class="org-left">Built-in Filters (gzip, etc)</td>
+<td class="org-left">filters</td>
+<td class="org-left">filters</td>
+</tr>
+
+<tr>
+<td class="org-left">Guice APIs and Dependencies</td>
+<td class="org-left">guice</td>
+<td class="org-left">guide</td>
+</tr>
+
+<tr>
+<td class="org-left">Play WS</td>
+<td class="org-left">ws</td>
+<td class="org-left">javaWs</td>
+</tr>
+</tbody>
+</table>
+<p>
+Play’s build also supports sub-projects so that you can partition your application into multiple smaller pieces. This can improve build times and make different pieces more easily reusable.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org72054b8" class="outline-2">
+<h2 id="org72054b8">Useful Links</h2>
+<div class="outline-text-2" id="text-org72054b8">
+<ul class="org-ul">
+<li><a href="https://www.baeldung.com/java-intro-to-the-play-framework">Introduction To Play</a></li>
+
+<li><a href="https://www.baeldung.com/rest-api-with-play">REST API with Play Framework</a></li>
+
+<li><a href="https://www.baeldung.com/routing-in-play">Routing In Play Applications</a></li>
+
+<li><a href="https://www.baeldung.com/java-play-asynchronous-http-programming">Asynchronous HTTP Programming with Play Framework</a></li>
+
+<li><a href="https://dzone.com/refcardz/getting-started-play-framework?chapter=12">Getting Started With Play Framework</a></li>
+
+<li><a href="https://developer.lightbend.com/start/?group=play">Play Starter</a></li>
+
+<li><a href="https://www.playframework.com/documentation/2.6.x/Tutorials">Play Framework Tutorials</a></li>
+
+<li><a href="https://www.toptal.com/java/building-modern-web-applications-with-angularjs-and-play-framework">Building Modern Web Applications with AngularJS and Play Framework</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 10-10-2020</p>
+<p class="author">Author: Martim Lima</p>
+<p class="date">Created: 2021-05-10 seg 11:32</p>
+</div>
+</body>
+</html>
