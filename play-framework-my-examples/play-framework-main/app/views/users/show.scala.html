@@ -1,0 +1,30 @@
+@(product: Products)
+
+  @main("Welcome to Negocialle") {
+  
+    <nav class="nav">
+      <a class="nav-link" href="/">NEGOCIALLE!</a>
+      <a class="nav-link" href="/aboutus">ABOUT US</a>
+      <a class="nav-link" href="/contact">CONTACT</a>
+      <a class="nav-link" href="/products">PRODUCTS</a>
+    </nav>
+
+    <div class="products">
+        <h1>INFORMATIONS</h1>
+    </div>
+
+      <div class="products-info">
+        
+        <h2>@product.name</h2>
+        <img src="https://ganheonline.dotz.com.br/wp-content/uploads/2020/11/empty.jpg" />
+        <h3>Price : @product.price $</h3>
+        <h3>Description : @product.description</h3>
+
+        
+      
+    </div>
+
+  <footer>NEGOCIALLE IMÓVEIS - ALL RESERVED RIGHTS!</footer>
+  
+ 
+}

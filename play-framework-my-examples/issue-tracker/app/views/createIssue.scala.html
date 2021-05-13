@@ -1,0 +1,52 @@
+@import play.mvc.Http.Request
+@import helper._
+
+@(uForm: Form[Issue],  contactInfo: models.ContactInfo)(implicit request: Request, messages: Messages)
+@main("Create Issue") {
+    <nav class="nav">
+        <a class="nav-link" href="/">Issue tracker</a>
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="/user">Create User</a>
+        <a class="nav-link" href="/users">Users</a>
+        <a class="nav-link" href="/issueList">Issues</a>
+    </nav>
+    <div>
+        <section class="banner">
+            <div class="p-5 mb-4 banner-content">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Issue Tracker</h1>
+                    <p class="col-md-12 fs-4">
+                        Demo Issue Tracker
+                    </p>
+                    <p class="col-md-12 fs-4">
+                        Play Framework training App
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <body style="align-items: center; text-align: center">
+    @helper.form(routes.IssueController.create()) {
+        @helper.CSRF.formField
+        @helper.inputText(uForm("title"))
+        @helper.inputText(uForm("application"))
+        @helper.inputText(uForm("category"))
+        @helper.inputText(uForm("viewStatus"))
+
+        @helper.inputText(uForm("summary"))
+        @helper.inputText(uForm("description"))
+        <button type="submit">Create Issue</button>
+    }
+    </body>
+    <section class="contact">
+        <p>mdLima development</p>
+        <div class="contact-info">
+            <p>@contactInfo.address</p>
+            <p>|</p>
+            <p>@contactInfo.telephone</p>
+            <p>|</p>
+            <p>@contactInfo.email</p>
+        </div>
+    </section>
+}
