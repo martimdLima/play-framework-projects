@@ -1,13 +1,9 @@
-package models;
+package models.userPersistence;
 
-import play.data.validation.*;
 import play.data.validation.Constraints.*;
 import io.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +28,7 @@ public class User extends Model {
     @MinLength(value=6, message="You must add a password with at least 6 characters")
     @MaxLength(value=20, message="You must add a password with less than 20 characters")
     protected String password;
+    @Transient
     public List<Integer> issueList;
     public Date created_at;
     public Date updated_at;

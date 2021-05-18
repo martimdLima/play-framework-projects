@@ -1,6 +1,7 @@
 @import play.mvc.Http.Request
 @import helper._
 
+@import models.issue.Issue
 @(uForm: Form[Issue],  contactInfo: models.ContactInfo)(implicit request: Request, messages: Messages)
 @main("Create Issue") {
     <nav class="nav">
@@ -8,7 +9,7 @@
         <a class="nav-link" href="/login">Login</a>
         <a class="nav-link" href="/logout">Logout</a>
         <a class="nav-link" href="/user">Create User</a>
-        <a class="nav-link" href="/users">Users</a>
+        <a class="nav-link" href="/allusers">Users</a>
         <a class="nav-link" href="/issueList">Issues</a>
     </nav>
     <div>
@@ -27,17 +28,17 @@
         </section>
     </div>
     <body style="align-items: center; text-align: center">
-    @helper.form(routes.IssueController.create()) {
-        @helper.CSRF.formField
-        @helper.inputText(uForm("title"))
-        @helper.inputText(uForm("application"))
-        @helper.inputText(uForm("category"))
-        @helper.inputText(uForm("viewStatus"))
+        <form method="POST" action="@routes.IssueController.addIssue()">
+            @helper.CSRF.formField
+            <input type="text" name="title"/>
+            <input type="text" name="application"/>
+            <input type="text" name="category"/>
+            <input type="text" name="viewStatus"/>
 
-        @helper.inputText(uForm("summary"))
-        @helper.inputText(uForm("description"))
-        <button type="submit">Create Issue</button>
-    }
+            <input type="text" name="summary"/>
+            <input type="text" name="description"/>
+            <button>Add User</button>
+        </form>
     </body>
     <section class="contact">
         <p>mdLima development</p>

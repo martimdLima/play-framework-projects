@@ -1,5 +1,6 @@
 @import play.mvc.Http.Request
 
+@import models.user.User
 @(uForm: Form[User], contactInfo: models.ContactInfo)(implicit request: Request, messages: Messages)
     @main("Create User") {
     <nav class="nav">
@@ -7,7 +8,7 @@
         <a class="nav-link" href="/login">Login</a>
         <a class="nav-link" href="/logout">Logout</a>
         <a class="nav-link" href="/user">Create User</a>
-        <a class="nav-link" href="/users">Users</a>
+        <a class="nav-link" href="/allusers">Users</a>
         <a class="nav-link" href="/issue">Create Issue</a>
         <a class="nav-link" href="/issueList">Issues</a>
     </nav>
@@ -27,15 +28,13 @@
         </section>
     </div>
         <body style="align-items: center; text-align: center">
-
-            @helper.form(routes.UserController.create()) {
+            <form method="POST" action="@routes.UserController.addUser()">
                 @helper.CSRF.formField
-                @helper.inputText(uForm("name"))
-                @helper.inputText(uForm("email"))
-                @helper.inputPassword(uForm("password"))
-
-                <button type="submit">Create User</button>
-            }
+                <input type="text" name="name"/>
+                <input type="text" name="email"/>
+                <input type="text" name="password"/>
+                <button>Add User</button>
+            </form>
         </body>
 
     </div>
