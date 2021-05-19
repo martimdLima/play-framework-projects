@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Issue;
+import models.User;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -98,6 +99,20 @@ public class HomeController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    public CompletionStage<Result> editUser(Http.Request request,Long id) {
+
+        // Run a db operation in another thread (using DatabaseExecutionContext)
+        CompletionStage<Map<String, String>> usersFuture = userRepository.options();
+
+        // Run the lookup also in another thread, then combine the results:
+        return userRepository.lookup(id).thenApplyAsync((userOptional) -> {
+            // This is the HTTP rendering thread context
+            User c = userOptional.get();
+            Form<User> userForm = formFactory.form(User.class).fill(c);
+            return ok(views.html.editUserForm.render(id, userForm, request, messagesApi.preferred(request)));
+        }, httpExecutionContext.current());
+    }
+
     /**
      * Handle the 'edit form' submission
      *
@@ -122,6 +137,25 @@ public class HomeController extends Controller {
         }
     }
 
+    public CompletionStage<Result> updateUser(Http.Request request, Long id) throws PersistenceException {
+        Form<User> userForm = formFactory.form(User.class).bindFromRequest(request);
+        if (userForm.hasErrors()) {
+            // Run issues db operation and then render the failure case
+            return userRepository.options().thenApplyAsync((nul) -> {
+                // This is the HTTP rendering thread context
+                return badRequest(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
+            }, httpExecutionContext.current());
+        } else {
+            User newUserData = userForm.get();
+            // Run update operation and then flash and then redirect
+            return userRepository.update(id, newUserData).thenApplyAsync(data -> {
+                // This is the HTTP rendering thread context
+                return GO_HOME
+                        .flashing("success", "User " + newUserData.name + " has been updated");
+            }, httpExecutionContext.current());
+        }
+    }
+
     /**
      * Display the 'new issue form'.
      */
@@ -131,6 +165,15 @@ public class HomeController extends Controller {
         return userRepository.options().thenApplyAsync((Map<String, String> issues) -> {
             // This is the HTTP rendering thread context
             return ok(views.html.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
+        }, httpExecutionContext.current());
+    }
+
+    public CompletionStage<Result> userSignup(Http.Request request) {
+        Form<User> userForm = formFactory.form(User.class);
+        // Run issues db operation and then render the form
+        return userRepository.options().thenApplyAsync((Map<String, String> users) -> {
+            // This is the HTTP rendering thread context
+            return ok(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -156,6 +199,27 @@ public class HomeController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    public CompletionStage<Result> saveUser(Http.Request request) {
+        Form<User> userForm = formFactory.form(User.class).bindFromRequest(request);
+
+        if (userForm.hasErrors()) {
+            // Run issues db operation and then render the form
+            return userRepository.options().thenApplyAsync((nul) -> {
+                // This is the HTTP rendering thread context
+                return badRequest(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
+            }, httpExecutionContext.current());
+        }
+
+
+        User user = userForm.get();
+        // Run insert db operation, then redirect
+        return userRepository.insert(user).thenApplyAsync(data -> {
+            // This is the HTTP rendering thread context
+            return GO_HOME
+                    .flashing("success", "User " + user.name + " has been created");
+        }, httpExecutionContext.current());
+    }
+
     /**
      * Handle issue deletion
      */
@@ -165,6 +229,15 @@ public class HomeController extends Controller {
             // This is the HTTP rendering thread context
             return GO_HOME
                 .flashing("success", "Issue has been deleted");
+        }, httpExecutionContext.current());
+    }
+
+    public CompletionStage<Result> deleteUser(Long id) {
+        // Run delete db operation, then redirect
+        return userRepository.delete(id).thenApplyAsync(v -> {
+            // This is the HTTP rendering thread context
+            return GO_HOME
+                    .flashing("success", "Issue has been deleted");
         }, httpExecutionContext.current());
     }
 

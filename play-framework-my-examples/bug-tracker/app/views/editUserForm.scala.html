@@ -1,0 +1,43 @@
+@(id: Long, userForm: Form[User])(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+
+@implicitField = @{ FieldConstructor(tags.forms.field_constructor.render) }
+
+@main {
+
+    <h1 class="my-3" id="page-title">Edit user</h1>
+
+    @form(routes.HomeController.updateUser(id)) {
+
+        @CSRF.formField
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(userForm("name"), Symbol("_label") -> "name", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(userForm("email"), Symbol("_label") -> "email", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(userForm("password"), Symbol("_label") -> "password", Symbol("_help") -> "")
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" type="submit">Save this user</button>
+            <span class="mx-2">or</span>
+            <a href="@routes.HomeController.listUsers()" id="add" class="btn btn-light" role="button">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.HomeController.deleteUser(id), Symbol("class") -> "top-right") {
+        @CSRF.formField
+        <button class="btn btn-danger" type="submit">Delete this user</button>
+    }
+
+}

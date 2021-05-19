@@ -26,10 +26,10 @@ public class IssueRepository {
     }
 
     /**
-     * Return a paged list of computer
+     * Return a paged list of issue
      *
      * @param page     Page to display
-     * @param pageSize Number of computers per page
+     * @param pageSize Number of issues per page
      * @param sortBy   Computer property used for sorting
      * @param order    Sort order (either or asc or desc)
      * @param filter   Filter applied on the name column
@@ -75,9 +75,9 @@ public class IssueRepository {
     public CompletionStage<Optional<Long>>  delete(Long id) {
         return supplyAsync(() -> {
             try {
-                final Optional<Issue> computerOptional = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne());
-                computerOptional.ifPresent(Model::delete);
-                return computerOptional.map(c -> c.id);
+                final Optional<Issue> issueOptional = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne());
+                issueOptional.ifPresent(Model::delete);
+                return issueOptional.map(c -> c.id);
             } catch (Exception e) {
                 return Optional.empty();
             }

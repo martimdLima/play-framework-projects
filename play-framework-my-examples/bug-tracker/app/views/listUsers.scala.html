@@ -70,9 +70,6 @@
                 <button type="submit" id="searchsubmit" class="btn btn-primary mb-2">Filter by name</button>
             </form>
         </div>
-        <div class="col-sm-6">
-            <a href="@routes.HomeController.create()" id="add" class="btn btn-success float-right" role="button"1>Add a new user</a>
-        </div>
     </div>
 
     @if(currentPage.getTotalCount == 0) {
@@ -86,7 +83,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead class="thead-light">
                 <tr>
-                    @header("name", "Title")
+                    @header("name", "Name")
                     @header("email", "Email")
                 </tr>
             </thead>
@@ -94,13 +91,7 @@
 
             @for(user <- currentPage.getList.asScala) {
                 <tr>
-                    <td>
-                    @if(user.name == null) {
-                        <em>-</em>
-                    } else {
-                        @user.name
-                    }
-                    </td>
+                    <td><a href="@routes.HomeController.editUser(user.id)">@user.name</a></td>
                     <td>
                     @if(user.email == null) {
                         <em>-</em>

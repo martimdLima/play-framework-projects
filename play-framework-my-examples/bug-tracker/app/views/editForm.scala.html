@@ -1,4 +1,4 @@
-@(id: Long, issueForm: Form[Issue], users: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
+@(id: Long, computerForm: Form[Issue], users: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
 
 @import helper._
 
@@ -13,24 +13,24 @@
         @CSRF.formField
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("name"), Symbol("_label") -> "Computer name", Symbol("_help") -> "")
+            @inputText(computerForm("name"), Symbol("_label") -> "Computer name", Symbol("_help") -> "")
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputDate(issueForm("introduced"), Symbol("_label") -> "Introduced date", Symbol("_help") -> "")
+            @inputDate(computerForm("introduced"), Symbol("_label") -> "Introduced date", Symbol("_help") -> "")
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputDate(issueForm("discontinued"), Symbol("_label") -> "Discontinued date", Symbol("_help") -> "")
+            @inputDate(computerForm("discontinued"), Symbol("_label") -> "Discontinued date", Symbol("_help") -> "")
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 mb-3">
             @select(
-                issueForm("user.id"),
+                computerForm("user.id"),
                 options(users),
                 Symbol("_label") -> "user", Symbol("_default") -> "-- Choose a user --",
                 Symbol("_showConstraints") -> false

@@ -6,23 +6,33 @@
 GET     /                           controllers.HomeController.index()
 
 # Computers list (look at the default values for pagination parameters)
-GET     /computers                  controllers.HomeController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /issues                  controllers.HomeController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Add issue
-GET     /computers/new              controllers.HomeController.create(request: Request)
-POST    /computers                  controllers.HomeController.save(request: Request)
+GET     /issues/new              controllers.HomeController.create(request: Request)
+POST    /issues                  controllers.HomeController.save(request: Request)
 
 # Edit existing issue--
-GET     /computers/:id              controllers.HomeController.edit(request: Request, id:Long)
-POST    /computers/:id              controllers.HomeController.update(request: Request, id:Long)
+GET     /issues/:id              controllers.HomeController.edit(request: Request, id:Long)
+POST    /issues/:id              controllers.HomeController.update(request: Request, id:Long)
 
 # Delete a issue
-POST    /computers/:id/delete       controllers.HomeController.delete(id:Long)
+POST    /issues/:id/delete       controllers.HomeController.delete(id:Long)
 
 
 # list users
 GET     /users                 controllers.HomeController.listUsers(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
+# Add user
+GET     /users/new              controllers.HomeController.userSignup(request: Request)
+POST    /users                  controllers.HomeController.saveUser(request: Request)
+
+# Edit existing user--
+GET     /users/:id              controllers.HomeController.editUser(request: Request, id:Long)
+POST    /users/:id              controllers.HomeController.updateUser(request: Request, id:Long)
+
+# Delete a user
+POST    /users/:id/delete       controllers.HomeController.deleteUser(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
