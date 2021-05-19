@@ -48,7 +48,7 @@ public class UserController extends Controller {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         return userRepository.page(page, 10, sortBy, order, filter).thenApplyAsync(listUsers -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.listUsers.render(listUsers, sortBy, order, filter, request, messagesApi.preferred(request)));
+            return ok(views.html.user.listUsers.render(listUsers, sortBy, order, filter, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -57,7 +57,7 @@ public class UserController extends Controller {
         // Run issues db operation and then render the form
         return userRepository.options().thenApplyAsync((Map<String, String> users) -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
+            return ok(views.html.user.signupForm.render(userForm, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -68,7 +68,7 @@ public class UserController extends Controller {
             // Run issues db operation and then render the form
             return userRepository.options().thenApplyAsync((nul) -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
+                return badRequest(views.html.user.signupForm.render(userForm, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         }
 
@@ -92,7 +92,7 @@ public class UserController extends Controller {
             // This is the HTTP rendering thread context
             User c = userOptional.get();
             Form<User> userForm = formFactory.form(User.class).fill(c);
-            return ok(views.html.editUserForm.render(id, userForm, request, messagesApi.preferred(request)));
+            return ok(views.html.user.editUserForm.render(id, userForm, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -102,7 +102,7 @@ public class UserController extends Controller {
             // Run issues db operation and then render the failure case
             return userRepository.options().thenApplyAsync((nul) -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.signupForm.render(userForm, request, messagesApi.preferred(request)));
+                return badRequest(views.html.user.signupForm.render(userForm, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         } else {
             User newUserData = userForm.get();

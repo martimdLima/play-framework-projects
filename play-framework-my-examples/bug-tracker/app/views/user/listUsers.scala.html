@@ -35,7 +35,7 @@
     * Helper generating table headers *
     ***********************************@
 @header(key:String, title:String) = {
-    <th scope="col" class="@key.replace(".","_")">
+    <th scope="col" class="@key.replace("../../../public","_")">
         <a class="sort-link @if(currentSortBy != key) { sort-link-inactive }" href="@link(0, key)">@title @sortIcon(key)</a>
     </th>
 }

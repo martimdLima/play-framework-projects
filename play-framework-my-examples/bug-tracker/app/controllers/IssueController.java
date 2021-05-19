@@ -49,7 +49,7 @@ public class IssueController extends Controller {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         return issueRepository.page(page, 10, sortBy, order, filter).thenApplyAsync(list -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.list.render(list, sortBy, order, filter, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.list.render(list, sortBy, order, filter, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -58,7 +58,7 @@ public class IssueController extends Controller {
         // Run issues db operation and then render the form
         return userRepository.options().thenApplyAsync((Map<String, String> issues) -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -71,7 +71,7 @@ public class IssueController extends Controller {
             // Run issues db operation and then render the form
             return userRepository.options().thenApplyAsync(issues -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
+                return badRequest(views.html.issue.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         }
 
@@ -90,7 +90,7 @@ public class IssueController extends Controller {
             // Run issues db operation and then render the failure case
             return userRepository.options().thenApplyAsync(issues -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
+                return badRequest(views.html.issue.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         } else {
             Issue newIssueData = issueForm.get();
@@ -113,7 +113,7 @@ public class IssueController extends Controller {
             // This is the HTTP rendering thread context
             Issue c = issueOptional.get();
             Form<Issue> issueForm = formFactory.form(Issue.class).fill(c);
-            return ok(views.html.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
