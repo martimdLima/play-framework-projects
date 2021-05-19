@@ -8,7 +8,7 @@
 
     <h1 class="my-3" id="page-title">Edit user</h1>
 
-    @form(routes.HomeController.updateUser(id)) {
+    @form(routes.UserController.updateUser(id)) {
 
         @CSRF.formField
         <div class="row">
@@ -30,12 +30,12 @@
         <div class="actions">
             <button class="btn btn-success" type="submit">Save this user</button>
             <span class="mx-2">or</span>
-            <a href="@routes.HomeController.listUsers()" id="add" class="btn btn-light" role="button">Cancel</a>
+            <a href="@routes.UserController.listUsers()" id="add" class="btn btn-light" role="button">Cancel</a>
         </div>
 
     }
 
-    @form(routes.HomeController.deleteUser(id), Symbol("class") -> "top-right") {
+    @form(routes.UserController.deleteUser(id), Symbol("class") -> "top-right") {
         @CSRF.formField
         <button class="btn btn-danger" type="submit">Delete this user</button>
     }

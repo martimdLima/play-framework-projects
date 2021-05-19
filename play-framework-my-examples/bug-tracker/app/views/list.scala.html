@@ -27,7 +27,7 @@
   }
 
   // Generate the link
-  routes.HomeController.list(newPage, sortBy, order, currentFilter)
+  routes.IssueController.list(newPage, sortBy, order, currentFilter)
 
 }
 
@@ -71,7 +71,7 @@
       </form>
     </div>
     <div class="col-sm-6">
-      <a href="@routes.HomeController.create()" id="add" class="btn btn-success float-right" role="button"1>Add a new issue</a>
+      <a href="@routes.IssueController.create()" id="add" class="btn btn-success float-right" role="button"1>Add a new issue</a>
     </div>
   </div>
 
@@ -102,7 +102,7 @@
 
       @for(issue <- currentPage.getList.asScala) {
         <tr>
-          <td><a href="@routes.HomeController.edit(issue.id)">@issue.name</a></td>
+          <td><a href="@routes.IssueController.edit(issue.id)">@issue.name</a></td>
           <td>
           @if(issue.application == null) {
             <em>-</em>

@@ -8,7 +8,7 @@
 
     <h1 class="my-3" id="page-title">Add a issue</h1>
 
-    @form(routes.HomeController.save()) {
+    @form(routes.IssueController.save()) {
 
         @CSRF.formField
         <div class="row">
@@ -41,7 +41,7 @@
         <div class="actions">
             <button class="btn btn-success" type="submit">Create this issue</button>
             <span class="mx-2">or</span>
-            <a href="@routes.HomeController.list()" id="add" class="btn btn-light" role="button">Cancel</a>
+            <a href="@routes.IssueController.list()" id="add" class="btn btn-light" role="button">Cancel</a>
         </div>
     }
 

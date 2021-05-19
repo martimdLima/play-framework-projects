@@ -27,7 +27,7 @@
     }
 
     // Generate the link
-    routes.HomeController.listUsers(newPage, sortBy, order, currentFilter)
+    routes.UserController.listUsers(newPage, sortBy, order, currentFilter)
 
 }
 
@@ -91,7 +91,7 @@
 
             @for(user <- currentPage.getList.asScala) {
                 <tr>
-                    <td><a href="@routes.HomeController.editUser(user.id)">@user.name</a></td>
+                    <td><a href="@routes.UserController.editUser(user.id)">@user.name</a></td>
                     <td>
                     @if(user.email == null) {
                         <em>-</em>

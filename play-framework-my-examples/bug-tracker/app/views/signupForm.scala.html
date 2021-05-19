@@ -8,7 +8,7 @@
 
     <h1 class="my-3" id="page-title">Signup</h1>
 
-    @form(routes.HomeController.saveUser()) {
+    @form(routes.UserController.saveUser()) {
 
         @CSRF.formField
         <div class="row">
@@ -30,7 +30,7 @@
         <div class="actions">
             <button class="btn btn-success" type="submit">Submit</button>
             <span class="mx-2">or</span>
-            <a href="@routes.HomeController.listUsers()" id="add" class="btn btn-light" role="button">Cancel</a>
+            <a href="@routes.UserController.listUsers()" id="add" class="btn btn-light" role="button">Cancel</a>
         </div>
     }
 
