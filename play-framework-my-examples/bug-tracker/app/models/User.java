@@ -5,7 +5,7 @@ import play.data.validation.Constraints;
 import javax.persistence.Entity;
 
 /**
- * Company entity managed by Ebean
+ * User entity managed by Ebean
  */
 @Entity 
 public class User extends BaseModel {

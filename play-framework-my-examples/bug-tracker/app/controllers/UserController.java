@@ -9,7 +9,6 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
-import repository.IssueRepository;
 import repository.UserRepository;
 
 import javax.inject.Inject;
@@ -17,6 +16,9 @@ import javax.persistence.PersistenceException;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Manage a database of users
+ */
 public class UserController extends Controller {
 
     private final UserRepository userRepository;
@@ -36,12 +38,20 @@ public class UserController extends Controller {
     }
 
     /**
-     * This result directly redirect to application home.
+     * This result directly redirect to the user list
      */
     private Result GO_HOME = Results.redirect(
             routes.UserController.listUsers(0, "name", "asc", "")
     );
 
+    /**
+     * Display the paginated list of users.
+     *
+     * @param page   Current page number (starts from 0)
+     * @param sortBy Column to be sorted
+     * @param order  Sort order (either asc or desc)
+     * @param filter Filter applied on computer names
+     */
     public CompletionStage<Result> listUsers(Http.Request request, int page, String sortBy, String order, String filter) {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         return userRepository.page(page, 10, sortBy, order, filter).thenApplyAsync(listUsers -> {
@@ -50,6 +60,9 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Display the 'new user form'.
+     */
     public CompletionStage<Result> userSignup(Http.Request request) {
         Form<User> userForm = formFactory.form(User.class);
         // Run issues db operation and then render the form
@@ -59,6 +72,9 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Handle the 'new user form' submission
+     */
     public CompletionStage<Result> saveUser(Http.Request request) {
         Form<User> userForm = formFactory.form(User.class).bindFromRequest(request);
 
@@ -79,6 +95,11 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Display the 'edit form' of a existing user.
+     *
+     * @param id Id of the user to edit
+     */
     public CompletionStage<Result> editUser(Http.Request request,Long id) {
 
         // Run a db operation in another thread (using DatabaseExecutionContext)
@@ -93,6 +114,11 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Handle the 'edit form' submission
+     *
+     * @param id Id of the user to edit
+     */
     public CompletionStage<Result> updateUser(Http.Request request, Long id) throws PersistenceException {
         Form<User> userForm = formFactory.form(User.class).bindFromRequest(request);
         if (userForm.hasErrors()) {
@@ -112,6 +138,9 @@ public class UserController extends Controller {
         }
     }
 
+    /**
+     * Handle user deletion
+     */
     public CompletionStage<Result> deleteUser(Long id) {
         // Run delete db operation, then redirect
         return userRepository.delete(id).thenApplyAsync(v -> {

@@ -17,16 +17,12 @@ import javax.inject.Singleton;
  */
 public class HomeController extends Controller {
 
-    @Singleton
-    private final FormFactory formFactory;
-
     @Inject
     public HomeController(FormFactory formFactory,
                           IssueRepository issueRepository,
                           UserRepository userRepository,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
-        this.formFactory = formFactory;
     }
 
     /**

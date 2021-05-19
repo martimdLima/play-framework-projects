@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
- * Computer entity managed by Ebean
+ * Issue entity managed by Ebean
  */
 @Entity 
 public class Issue extends BaseModel {

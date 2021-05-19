@@ -17,6 +17,9 @@ import javax.persistence.PersistenceException;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Manage a database of issues
+ */
 public class IssueController extends Controller {
 
     private final IssueRepository issueRepository;
@@ -39,12 +42,20 @@ public class IssueController extends Controller {
     }
 
     /**
-     * This result directly redirect to application home.
+     * This result directly redirect to issue list.
      */
     private Result GO_HOME = Results.redirect(
             routes.IssueController.list(0, "name", "asc", "")
     );
 
+    /**
+     * Display the paginated list of issues.
+     *
+     * @param page   Current page number (starts from 0)
+     * @param sortBy Column to be sorted
+     * @param order  Sort order (either asc or desc)
+     * @param filter Filter applied on computer names
+     */
     public CompletionStage<Result> list(Http.Request request, int page, String sortBy, String order, String filter) {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         return issueRepository.page(page, 10, sortBy, order, filter).thenApplyAsync(list -> {
@@ -53,6 +64,9 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Display the 'new issue form'.
+     */
     public CompletionStage<Result> create(Http.Request request) {
         Form<Issue> issueForm = formFactory.form(Issue.class);
         System.out.println(request);
@@ -86,6 +100,11 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Handle the 'edit form' submission
+     *
+     * @param id Id of the issue to edit
+     */
     public CompletionStage<Result> update(Http.Request request, Long id) throws PersistenceException {
         Form<Issue> issueForm = formFactory.form(Issue.class).bindFromRequest(request);
         if (issueForm.hasErrors()) {
@@ -105,6 +124,11 @@ public class IssueController extends Controller {
         }
     }
 
+    /**
+     * Display the 'edit form' of a existing issue.
+     *
+     * @param id Id of the issue to edit
+     */
     public CompletionStage<Result> edit(Http.Request request,Long id) {
 
         // Run a db operation in another thread (using DatabaseExecutionContext)
@@ -119,6 +143,9 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Handle issue deletion
+     */
     public CompletionStage<Result> delete(Long id) {
         // Run delete db operation, then redirect
         return issueRepository.delete(id).thenApplyAsync(v -> {
