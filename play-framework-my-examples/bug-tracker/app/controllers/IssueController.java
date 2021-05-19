@@ -42,7 +42,7 @@ public class IssueController extends Controller {
      * This result directly redirect to application home.
      */
     private Result GO_HOME = Results.redirect(
-            routes.HomeController.index()
+            routes.IssueController.list(0, "name", "asc", "")
     );
 
     public CompletionStage<Result> list(Http.Request request, int page, String sortBy, String order, String filter) {
@@ -55,6 +55,7 @@ public class IssueController extends Controller {
 
     public CompletionStage<Result> create(Http.Request request) {
         Form<Issue> issueForm = formFactory.form(Issue.class);
+        System.out.println(request);
         // Run issues db operation and then render the form
         return userRepository.options().thenApplyAsync((Map<String, String> issues) -> {
             // This is the HTTP rendering thread context
@@ -76,6 +77,7 @@ public class IssueController extends Controller {
         }
 
         Issue issue = issueForm.get();
+
         // Run insert db operation, then redirect
         return issueRepository.insert(issue).thenApplyAsync(data -> {
             // This is the HTTP rendering thread context

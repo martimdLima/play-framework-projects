@@ -15,6 +15,10 @@ lazy val root = (project in file("."))
       "javax.xml.bind" % "jaxb-api" % "2.3.1",
       "javax.activation" % "activation" % "1.1.1",
       "org.glassfish.jaxb" % "jaxb-runtime" % "2.3.2",
+      "org.mariadb.jdbc" % "mariadb-java-client" % "2.7.3",
+      "mysql" % "mysql-connector-java" % "8.0.22",
+      "org.hibernate" % "hibernate-core" % "5.4.9.Final",
+      javaJpa,
     ),
     testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")

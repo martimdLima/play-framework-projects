@@ -19,7 +19,6 @@ import java.util.concurrent.CompletionStage;
 
 public class UserController extends Controller {
 
-    //private final IssueRepository issueRepository;
     private final UserRepository userRepository;
     private final FormFactory formFactory;
     private final HttpExecutionContext httpExecutionContext;
@@ -30,7 +29,6 @@ public class UserController extends Controller {
                           UserRepository userRepository,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
-        //this.issueRepository = issueRepository;
         this.formFactory = formFactory;
         this.userRepository = userRepository;
         this.httpExecutionContext = httpExecutionContext;
@@ -41,7 +39,7 @@ public class UserController extends Controller {
      * This result directly redirect to application home.
      */
     private Result GO_HOME = Results.redirect(
-            routes.HomeController.index()
+            routes.UserController.listUsers(0, "name", "asc", "")
     );
 
     public CompletionStage<Result> listUsers(Http.Request request, int page, String sortBy, String order, String filter) {
@@ -71,7 +69,6 @@ public class UserController extends Controller {
                 return badRequest(views.html.user.signupForm.render(userForm, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         }
-
 
         User user = userForm.get();
         // Run insert db operation, then redirect

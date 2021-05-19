@@ -23,7 +23,37 @@
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
+            @inputDate(issueForm("updated"), Symbol("_label") -> "Updated", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
             @inputDate(issueForm("discontinued"), Symbol("_label") -> "Ended", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(issueForm("application"), Symbol("_label") -> "application", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(issueForm("category"), Symbol("_label") -> "category", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(issueForm("status"), Symbol("_label") -> "status", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(issueForm("summary"), Symbol("_label") -> "summary", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(issueForm("description"), Symbol("_label") -> "description", Symbol("_help") -> "")
             </div>
         </div>
 

@@ -10,17 +10,15 @@ import repository.UserRepository;
 import repository.IssueRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Manage a database of Issues
  */
 public class HomeController extends Controller {
 
-    private final IssueRepository issueRepository;
-    private final UserRepository userRepository;
+    @Singleton
     private final FormFactory formFactory;
-    private final HttpExecutionContext httpExecutionContext;
-    private final MessagesApi messagesApi;
 
     @Inject
     public HomeController(FormFactory formFactory,
@@ -28,25 +26,16 @@ public class HomeController extends Controller {
                           UserRepository userRepository,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
-        this.issueRepository = issueRepository;
         this.formFactory = formFactory;
-        this.userRepository = userRepository;
-        this.httpExecutionContext = httpExecutionContext;
-        this.messagesApi = messagesApi;
     }
-
-    /**
-     * This result directly redirect to application home.
-     */
-    private Result GO_HOME = Results.redirect(
-        routes.IssueController.list(0, "name", "asc", "")
-    );
 
     /**
      * Handle default path requests, redirect to Issues list
      */
     public Result index() {
-        return GO_HOME;
+        return Results.redirect(
+                routes.IssueController.list(0, "name", "asc", "")
+        );
     }
 }
             
