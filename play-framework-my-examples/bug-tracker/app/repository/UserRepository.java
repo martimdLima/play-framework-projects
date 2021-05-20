@@ -6,10 +6,7 @@ import models.User;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
@@ -61,6 +58,27 @@ public class UserRepository {
 
     public CompletionStage<Optional<User>> lookup(Long id) {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(id).findOne()), executionContext);
+    }
+
+    public CompletionStage<Optional<User>> lookupByEmail(String email) {
+        return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(email).findOne()), executionContext);
+    }
+
+    public CompletionStage<User> retrieveUserByEmail(String email) {
+        return supplyAsync(() -> {
+            List<User> users = ebeanServer.find(User.class).findList();
+
+            User foundUser = new User();
+            for(int i = 0; i < users.size(); i++) {
+
+                if(users.get(i).email.equals(email)) {
+                      foundUser = users.get(i);
+                }
+            }
+
+            return foundUser;
+
+        }, executionContext);
     }
 
     public CompletionStage<Long> insert(User user) {

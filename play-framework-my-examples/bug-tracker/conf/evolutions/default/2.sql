@@ -3,15 +3,15 @@
 # --- !Ups
 
  insert into user (id,name, email, password) values (  1,'John Doe.', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  2,'Rick Ashtley', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  3,'Don Blooth', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  4,'Kerry King', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  5,'King Diamond', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  6,'Ozzy Osbourne', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  7,'Tom Araya', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  8,'Jane Doe', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  9,'Maria Doe', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values ( 10,'Ana James', 'test@test.com', 'testing');
+ insert into user (id,name, email, password) values (  2,'Rick Ashtley', 'test1@test.com', 'testing');
+ insert into user (id,name, email, password) values (  3,'Don Blooth', 'test2@test.com', 'testing');
+ insert into user (id,name, email, password) values (  4,'Kerry King', 'test3@test.com', 'testing');
+ insert into user (id,name, email, password) values (  5,'King Diamond', 'test4@test.com', 'testing');
+ insert into user (id,name, email, password) values (  6,'Ozzy Osbourne', 'test5@test.com', 'testing');
+ insert into user (id,name, email, password) values (  7,'Tom Araya', 'test6@test.com', 'testing');
+ insert into user (id,name, email, password) values (  8,'Jane Doe', 'test7@test.com', 'testing');
+ insert into user (id,name, email, password) values (  9,'Maria Doe', 'test8@test.com', 'testing');
+ insert into user (id,name, email, password) values ( 10,'Ana James', 'test9@test.com', 'testing');
 
 
 insert into issue (id,name,introduced, updated, discontinued, application, category, status, summary, description, user_id) values (  1, 'MacBook Pro 15.4 inch' , null , null, null, 'testApp1', 'finance', 'resolved', 'a test issue', 'a test issue', 1);

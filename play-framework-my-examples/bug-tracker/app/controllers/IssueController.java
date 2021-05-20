@@ -69,7 +69,7 @@ public class IssueController extends Controller {
      */
     public CompletionStage<Result> create(Http.Request request) {
         Form<Issue> issueForm = formFactory.form(Issue.class);
-        System.out.println(request);
+
         // Run issues db operation and then render the form
         return userRepository.options().thenApplyAsync((Map<String, String> issues) -> {
             // This is the HTTP rendering thread context

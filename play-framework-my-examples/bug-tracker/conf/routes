@@ -5,6 +5,10 @@
 # Default path will just redirect to the issue list
 GET     /                           controllers.HomeController.index()
 
+# Auth
+GET     /auth                           controllers.LoginController.auth(request: Request)
+POST   /auth                           controllers.LoginController.login(request: Request)
+
 # Computers list (look at the default values for pagination parameters)
 GET     /issues                  controllers.IssueController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
