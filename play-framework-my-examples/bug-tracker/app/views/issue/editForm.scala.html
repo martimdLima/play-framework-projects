@@ -11,7 +11,6 @@
     @form(routes.IssueController.update(id)) {
 
         @CSRF.formField
-        @CSRF.formField
         <div class="row">
             <div class="col-md-3 mb-3">
             @inputText(issueForm("name"), Symbol("_label") -> "title", Symbol("_help") -> "")

@@ -2,16 +2,16 @@
 
 # --- !Ups
 
- insert into user (id,name, email, password) values (  1,'John Doe.', 'test@test.com', 'testing');
- insert into user (id,name, email, password) values (  2,'Rick Ashtley', 'test1@test.com', 'testing');
- insert into user (id,name, email, password) values (  3,'Don Blooth', 'test2@test.com', 'testing');
- insert into user (id,name, email, password) values (  4,'Kerry King', 'test3@test.com', 'testing');
- insert into user (id,name, email, password) values (  5,'King Diamond', 'test4@test.com', 'testing');
- insert into user (id,name, email, password) values (  6,'Ozzy Osbourne', 'test5@test.com', 'testing');
- insert into user (id,name, email, password) values (  7,'Tom Araya', 'test6@test.com', 'testing');
- insert into user (id,name, email, password) values (  8,'Jane Doe', 'test7@test.com', 'testing');
- insert into user (id,name, email, password) values (  9,'Maria Doe', 'test8@test.com', 'testing');
- insert into user (id,name, email, password) values ( 10,'Ana James', 'test9@test.com', 'testing');
+ insert into user (id,name, email, password) values (  1,'John Doe.', 'test@test.com', 'testes');
+ insert into user (id,name, email, password) values (  2,'Rick Ashtley', 'test1@test.com', 'testes1');
+ insert into user (id,name, email, password) values (  3,'Don Blooth', 'test2@test.com', 'testes2');
+ insert into user (id,name, email, password) values (  4,'Kerry King', 'test3@test.com', 'testes3');
+ insert into user (id,name, email, password) values (  5,'King Diamond', 'test4@test.com', 'testes4');
+ insert into user (id,name, email, password) values (  6,'Ozzy Osbourne', 'test5@test.com', 'testes5');
+ insert into user (id,name, email, password) values (  7,'Tom Araya', 'test6@test.com', 'testes6');
+ insert into user (id,name, email, password) values (  8,'Jane Doe', 'test7@test.com', 'testes7');
+ insert into user (id,name, email, password) values (  9,'Maria Doe', 'test8@test.com', 'testes8');
+ insert into user (id,name, email, password) values ( 10,'Ana James', 'test9@test.com', 'testes9');
 
 
 insert into issue (id,name,introduced, updated, discontinued, application, category, status, summary, description, user_id) values (  1, 'MacBook Pro 15.4 inch' , null , null, null, 'DemoApp1', 'Finance', 'Resolved', 'a test issue', 'a test issue', 1);

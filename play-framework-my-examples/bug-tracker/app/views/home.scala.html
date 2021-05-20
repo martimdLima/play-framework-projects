@@ -1,0 +1,9 @@
+@()(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+
+@implicitField = @{ FieldConstructor(tags.forms.field_constructor.render) }
+
+@main {
+  <h1 class="my-3" id="page-title">Home</h1>
+}
