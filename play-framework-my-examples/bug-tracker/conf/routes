@@ -3,7 +3,8 @@
 # ~~~~
 
 # Default path will just redirect to the issue list
-GET     /                           controllers.HomeController.index()
+GET     /                          controllers.HomeController.index()
+#GET     /                           controllers.HomeController.home(request: Request)
 
 # Auth
 GET     /auth                           controllers.LoginController.auth(request: Request)
@@ -27,15 +28,15 @@ POST    /issues/:id/delete       controllers.IssueController.delete(id:Long)
 # list users
 GET     /users                 controllers.UserController.listUsers(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
-# Add user
+# Add main
 GET     /users/new              controllers.UserController.userSignup(request: Request)
 POST    /users                  controllers.UserController.saveUser(request: Request)
 
-# Edit existing user--
+# Edit existing main--
 GET     /users/:id              controllers.UserController.editUser(request: Request, id:Long)
 POST    /users/:id              controllers.UserController.updateUser(request: Request, id:Long)
 
-# Delete a user
+# Delete a main
 POST    /users/:id/delete       controllers.UserController.deleteUser(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path

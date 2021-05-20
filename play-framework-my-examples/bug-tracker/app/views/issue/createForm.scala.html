@@ -1,4 +1,4 @@
-@(issueForm: Form[Issue], users: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
+@(issueForm: Form[Issue], users: Map[String, String], applications: List[String], categories: List[String], statuses: List[String])(implicit request: Http.Request, messages: play.i18n.Messages)
 
 @import helper._
 
@@ -33,17 +33,33 @@
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("application"), Symbol("_label") -> "application", Symbol("_help") -> "")
+            @select(
+                field = issueForm("application"),
+                options(applications),
+                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_showConstraints") -> false
+            )
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("category"), Symbol("_label") -> "category", Symbol("_help") -> "")
+            @select(
+                field = issueForm("category"),
+                options(categories),
+                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_showConstraints") -> false
+            )
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("status"), Symbol("_label") -> "status", Symbol("_help") -> "")
+            @select(
+                field = issueForm("status"),
+                options(statuses),
+                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_showConstraints") -> false
+            )
+            </div>
             </div>
         </div>
         <div class="row">

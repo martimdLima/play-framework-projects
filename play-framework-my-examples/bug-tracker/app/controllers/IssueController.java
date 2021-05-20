@@ -14,6 +14,8 @@ import repository.UserRepository;
 
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
@@ -70,10 +72,14 @@ public class IssueController extends Controller {
     public CompletionStage<Result> create(Http.Request request) {
         Form<Issue> issueForm = formFactory.form(Issue.class);
 
+        List<String> statusOptions = getStatusesOptions();
+        List<String> categoryOptions = getCategoryOptions();
+        List<String> applicationOptions = getApplicationOptions();
+
         // Run issues db operation and then render the form
-        return userRepository.options().thenApplyAsync((Map<String, String> issues) -> {
+        return userRepository.options().thenApplyAsync((Map<String, String> users) -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.issue.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.createForm.render(issueForm, users, statusOptions, categoryOptions, applicationOptions, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -82,11 +88,16 @@ public class IssueController extends Controller {
      */
     public CompletionStage<Result> save(Http.Request request) {
         Form<Issue> issueForm = formFactory.form(Issue.class).bindFromRequest(request);
+
+        List<String> statusOptions = getStatusesOptions();
+        List<String> categoryOptions = getCategoryOptions();
+        List<String> applicationOptions = getApplicationOptions();
+
         if (issueForm.hasErrors()) {
             // Run issues db operation and then render the form
-            return userRepository.options().thenApplyAsync(issues -> {
+            return userRepository.options().thenApplyAsync(users -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.issue.createForm.render(issueForm, issues, request, messagesApi.preferred(request)));
+                return badRequest(views.html.issue.createForm.render(issueForm, users, statusOptions, categoryOptions, applicationOptions, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         }
 
@@ -153,5 +164,31 @@ public class IssueController extends Controller {
             return GO_HOME
                     .flashing("success", "Issue has been deleted");
         }, httpExecutionContext.current());
+    }
+
+    private List<String> getStatusesOptions() {
+        List<String> statusOptions = new ArrayList<>();
+        statusOptions.add("Resolved");
+        statusOptions.add("UnResolved");
+        return statusOptions;
+    }
+
+    private List<String> getCategoryOptions() {
+        List<String> statusOptions = new ArrayList<>();
+        statusOptions.add("Finance");
+        statusOptions.add("Automotive");
+        statusOptions.add("Automation");
+        statusOptions.add("Robotics");
+        return statusOptions;
+    }
+
+    private List<String> getApplicationOptions() {
+        List<String> statusOptions = new ArrayList<>();
+        statusOptions.add("DemoApp1");
+        statusOptions.add("DemoApp2");
+        statusOptions.add("DemoApp3");
+        statusOptions.add("DemoApp4");
+        statusOptions.add("DemoApp5");
+        return statusOptions;
     }
 }

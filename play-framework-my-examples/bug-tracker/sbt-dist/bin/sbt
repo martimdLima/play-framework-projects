@@ -369,7 +369,7 @@ run() {
   set -- "${residual_args[@]}"
   argumentCount=$#
 
-  # Copy preloaded repo to user's preloaded directory
+  # Copy preloaded repo to main's preloaded directory
   syncPreloaded
 
   # no jar? download it.
@@ -496,7 +496,7 @@ process_my_args () {
   # Now, ensure sbt version is used.
   [[ "${sbt_version}XXX" != "XXX" ]] && addJava "-Dsbt.version=$sbt_version"
 
-  # Confirm a user's intent if the current directory does not look like an sbt
+  # Confirm a main's intent if the current directory does not look like an sbt
   # top-level directory and neither the -sbt-create option nor the "new"
   # command was given.
   [[ -f ./build.sbt || -d ./project || -n "$sbt_create" || -n "$sbt_new" ]] || {

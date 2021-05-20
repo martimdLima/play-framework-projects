@@ -2,9 +2,13 @@ package repository;
 
 import io.ebean.*;
 import models.Issue;
+import models.User;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
