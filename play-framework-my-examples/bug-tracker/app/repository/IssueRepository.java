@@ -2,13 +2,11 @@ package repository;
 
 import io.ebean.*;
 import models.Issue;
-import models.User;
+
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
@@ -64,6 +62,11 @@ public class IssueRepository {
                     savedIssue.discontinued = newIssueData.discontinued;
                     savedIssue.introduced = newIssueData.introduced;
                     savedIssue.name = newIssueData.name;
+                    savedIssue.description = newIssueData.description;
+                    savedIssue.summary = newIssueData.summary;
+                    savedIssue.application = newIssueData.application;
+                    savedIssue.category = newIssueData.category;
+                    savedIssue.status = newIssueData.status;
 
                     savedIssue.update();
                     txn.commit();

@@ -79,7 +79,7 @@ public class IssueController extends Controller {
         // Run issues db operation and then render the form
         return userRepository.options().thenApplyAsync((Map<String, String> users) -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.issue.createForm.render(issueForm, users, statusOptions, categoryOptions, applicationOptions, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.createForm.render(issueForm, users, applicationOptions, categoryOptions, statusOptions,  request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
@@ -97,7 +97,7 @@ public class IssueController extends Controller {
             // Run issues db operation and then render the form
             return userRepository.options().thenApplyAsync(users -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.issue.createForm.render(issueForm, users, statusOptions, categoryOptions, applicationOptions, request, messagesApi.preferred(request)));
+                return badRequest(views.html.issue.createForm.render(issueForm, users, applicationOptions, categoryOptions, statusOptions,  request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         }
 
@@ -118,11 +118,16 @@ public class IssueController extends Controller {
      */
     public CompletionStage<Result> update(Http.Request request, Long id) throws PersistenceException {
         Form<Issue> issueForm = formFactory.form(Issue.class).bindFromRequest(request);
+
+        List<String> statusOptions = getStatusesOptions();
+        List<String> categoryOptions = getCategoryOptions();
+        List<String> applicationOptions = getApplicationOptions();
+
         if (issueForm.hasErrors()) {
             // Run issues db operation and then render the failure case
-            return userRepository.options().thenApplyAsync(issues -> {
+            return userRepository.options().thenApplyAsync(users -> {
                 // This is the HTTP rendering thread context
-                return badRequest(views.html.issue.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
+                return badRequest(views.html.issue.editForm.render(id, issueForm, users, applicationOptions, categoryOptions, statusOptions,  request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
         } else {
             Issue newIssueData = issueForm.get();
@@ -145,12 +150,16 @@ public class IssueController extends Controller {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         CompletionStage<Map<String, String>> issuesFuture = userRepository.options();
 
+        List<String> statusOptions = getStatusesOptions();
+        List<String> categoryOptions = getCategoryOptions();
+        List<String> applicationOptions = getApplicationOptions();
+
         // Run the lookup also in another thread, then combine the results:
-        return issueRepository.lookup(id).thenCombineAsync(issuesFuture, (issueOptional, issues) -> {
+        return issueRepository.lookup(id).thenCombineAsync(issuesFuture, (issueOptional, users) -> {
             // This is the HTTP rendering thread context
             Issue c = issueOptional.get();
             Form<Issue> issueForm = formFactory.form(Issue.class).fill(c);
-            return ok(views.html.issue.editForm.render(id, issueForm, issues, request, messagesApi.preferred(request)));
+            return ok(views.html.issue.editForm.render(id, issueForm, users, applicationOptions, categoryOptions, statusOptions,  request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 

@@ -34,9 +34,9 @@
         <div class="row">
             <div class="col-md-3 mb-3">
             @select(
-                field = issueForm("application"),
+                issueForm("issue.application"),
                 options(applications),
-                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_label") -> "Assigned Application", Symbol("_default") -> "-- Choose a application --",
                 Symbol("_showConstraints") -> false
             )
             </div>
@@ -44,9 +44,9 @@
         <div class="row">
             <div class="col-md-3 mb-3">
             @select(
-                field = issueForm("category"),
+                issueForm("category"),
                 options(categories),
-                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_label") -> "Assigned Category", Symbol("_default") -> "-- Choose a category --",
                 Symbol("_showConstraints") -> false
             )
             </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-3 mb-3">
             @select(
-                field = issueForm("status"),
+                issueForm("status"),
                 options(statuses),
                 Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
                 Symbol("_showConstraints") -> false

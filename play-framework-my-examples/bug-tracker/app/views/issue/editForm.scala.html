@@ -1,4 +1,4 @@
-@(id: Long, issueForm: Form[Issue], users: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
+@(id: Long, issueForm: Form[Issue], users: Map[String, String], applications: List[String], categories: List[String], statuses: List[String])(implicit request: Http.Request, messages: play.i18n.Messages)
 
 @import helper._
 
@@ -10,6 +10,7 @@
 
     @form(routes.IssueController.update(id)) {
 
+        @CSRF.formField
         @CSRF.formField
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -33,18 +34,35 @@
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("application"), Symbol("_label") -> "application", Symbol("_help") -> "")
+            @select(
+                issueForm("application"),
+                options(applications),
+                Symbol("_label") -> "Assigned Application", Symbol("_default") -> "-- Choose a application --",
+                Symbol("_showConstraints") -> false
+            )
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("category"), Symbol("_label") -> "category", Symbol("_help") -> "")
+            @select(
+                issueForm("category"),
+                options(categories),
+                Symbol("_label") -> "Assigned Category", Symbol("_default") -> "-- Choose a category --",
+                Symbol("_showConstraints") -> false
+            )
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
-            @inputText(issueForm("status"), Symbol("_label") -> "status", Symbol("_help") -> "")
+            @select(
+                issueForm("status"),
+                options(statuses),
+                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                Symbol("_showConstraints") -> false
+            )
             </div>
+        </div>
+        </div>
         </div>
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -62,7 +80,7 @@
             @select(
                 issueForm("user.id"),
                 options(users),
-                Symbol("_label") -> "user", Symbol("_default") -> "-- Choose a user --",
+                Symbol("_label") -> "Assigned User", Symbol("_default") -> "-- Choose a user --",
                 Symbol("_showConstraints") -> false
             )
             </div>
