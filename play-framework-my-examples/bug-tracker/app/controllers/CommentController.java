@@ -2,6 +2,8 @@ package controllers;
 
 import models.Comment;
 import models.Comment;
+import models.Issue;
+import models.User;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -14,6 +16,7 @@ import repository.IssueRepository;
 import repository.UserRepository;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,15 +61,15 @@ public class CommentController {
         }, httpExecutionContext.current());
     }
 
-    public CompletionStage<Result> create(Http.Request request, long id) {
+    public CompletionStage<Result> create(Http.Request request, long id) throws ExecutionException, InterruptedException {
         Form<Comment> commentForm = formFactory.form(Comment.class);
 
-        final Map<String, String> users = getUsers();
+        final Map<String, String> users = userRepository.getUsers();
         final Map<String, String> issues = new HashMap<>();
         issues.put(issueRepository.lookup(id).toCompletableFuture().join().get().id.toString(), issueRepository.lookup(id).toCompletableFuture().join().get().name);
 
         // Run issues db operation and then render the form
-        return userRepository.options().thenApplyAsync((nul) -> {
+        return commentRepository.lookup(id).thenApplyAsync((nul) -> {
             // This is the HTTP rendering thread context
             return ok(views.html.comments.createForm.render(id, commentForm, users, issues, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
@@ -75,10 +78,10 @@ public class CommentController {
     /**
      * Handle the 'new Comment form' submission
      */
-    public CompletionStage<Result> save(Http.Request request, Long id) {
+    public CompletionStage<Result> save(Http.Request request, Long id) throws ExecutionException, InterruptedException {
         Form<Comment> commentForm = formFactory.form(Comment.class).bindFromRequest(request);
 
-        final Map<String, String> users = getUsers();
+        final Map<String, String> users = userRepository.getUsers();
         final Map<String, String> issues = new HashMap<>();
         issues.put(issueRepository.lookup(id).toCompletableFuture().join().get().id.toString(), issueRepository.lookup(id).toCompletableFuture().join().get().name);
 
@@ -101,27 +104,69 @@ public class CommentController {
     }
 
 
-    private Map<String, String> getIssues() {
-        Map<String, String> issueList = new HashMap<>();
-        try {
-            issueList = issueRepository.getIssues();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    /**
+     * Handle the 'edit form' submission
+     *
+     * @param id Id of the issue to edit
+     */
+    public CompletionStage<Result> update(Http.Request request, Long id) throws PersistenceException, ExecutionException, InterruptedException {
+        Form<Comment> commentForm = formFactory.form(Comment.class).bindFromRequest(request);
+
+        final Map<String, String> users = userRepository.getUsers();
+        final Map<String, String> issues = new HashMap<>();
+        Issue issue = issueRepository.lookup(commentRepository.lookup(id).toCompletableFuture().join().get().issue.id).toCompletableFuture().join().get();
+        issues.put(issue.id.toString(), issue.name);
+
+        if (commentForm.hasErrors()) {
+            // Run comments db operation and then render the failure case
+            return commentRepository.lookup(id).thenApplyAsync(nul -> {
+                // This is the HTTP rendering thread context
+                return ok(views.html.comments.createForm.render(id, commentForm, users, issues, request, messagesApi.preferred(request)));
+            }, httpExecutionContext.current());
+        } else {
+            Comment newCommentData = commentForm.get();
+            // Run update operation and then flash and then redirect
+            return commentRepository.update(id, newCommentData).thenApplyAsync(data -> {
+                // This is the HTTP rendering thread context
+                return GO_HOME
+                        .flashing("success", "Comment " + id + " for issue " + issue.name + " has been updated");
+            }, httpExecutionContext.current());
         }
-        return issueList;
     }
 
-    private Map<String, String> getUsers() {
-        Map<String, String> userList = new HashMap<>();
-        try {
-            userList = userRepository.getUsers();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return userList;
+    /**
+     * Display the 'edit form' of a existing comment.
+     *
+     * @param id Id of the comment to edit
+     */
+    public CompletionStage<Result> edit(Http.Request request,Long id) throws ExecutionException, InterruptedException {
+
+        final Map<String, String> users = userRepository.getUsers();
+        final Map<String, String> issues = new HashMap<>();
+
+        Issue issue = issueRepository.lookup(commentRepository.lookup(id).toCompletableFuture().join().get().issue.id).toCompletableFuture().join().get();
+
+        issues.put(issue.id.toString(), issue.name);
+
+
+        // Run the lookup also in another thread, then combine the results:
+        return commentRepository.lookup(id).thenApplyAsync((commentOptional) -> {
+            // This is the HTTP rendering thread context
+            Comment comment = commentOptional.get();
+            Form<Comment> commentForm = formFactory.form(Comment.class).fill(comment);
+            return ok(views.html.comments.editForm.render(id, commentForm, users, issues,  request, messagesApi.preferred(request)));
+        }, httpExecutionContext.current());
+    }
+
+    /**
+     * Handle user deletion
+     */
+    public CompletionStage<Result> delete(Long id) {
+        // Run delete db operation, then redirect
+        return commentRepository.delete(id).thenApplyAsync(v -> {
+            // This is the HTTP rendering thread context
+            return GO_HOME
+                    .flashing("success", "Comment has been deleted");
+        }, httpExecutionContext.current());
     }
 }

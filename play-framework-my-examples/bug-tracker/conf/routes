@@ -28,7 +28,7 @@ POST    /issues/:id/delete       controllers.IssueController.delete(id:Long)
 
 
 # list users
-GET     /users                 controllers.UserController.listUsers(request: Request, p:Int ?= 0, s ?= "introduced", o ?= "desc", f ?= "")
+GET     /users                 controllers.UserController.listUsers(request: Request, p:Int ?= 0, s ?= "name", o ?= "desc", f ?= "")
 
 # Add main
 GET     /users/new              controllers.UserController.userSignup(request: Request)
@@ -46,7 +46,16 @@ GET     /comments/new              controllers.CommentController.create(request:
 POST    /comments                  controllers.CommentController.save(request: Request, id:Long)
 
 # Comments
-GET /comments/:id               controllers.CommentController.listUserComments(request: Request, id:Long, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET /comments/list/:id               controllers.CommentController.listUserComments(request: Request, id:Long, p:Int ?= 0, s ?= "introduced", o ?= "asc", f ?= "")
+
+# Edit existing main--
+GET     /comments/:id              controllers.CommentController.edit(request: Request, id:Long)
+POST    /comments/:id              controllers.CommentController.update(request: Request, id:Long)
+
+# Delete a main
+POST    /comments/:id/delete       controllers.CommentController.delete(id:Long)
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

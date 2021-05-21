@@ -26,7 +26,8 @@
         </div>
         <div class="card-body">
             @for(i <- issue.comments) {
-                @i.message
+                <td><a href="@routes.CommentController.edit(i.id)">@i.message</a></td>
+
             }
         </div>
         <div class="card-footer text-muted">
