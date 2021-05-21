@@ -66,9 +66,7 @@ public class CommentRepository {
                 if (savedComment != null) {
                     savedComment.message = newCommentData.message;
                     savedComment.user = newCommentData.user;
-                    savedComment.introduced = newCommentData.introduced;
                     savedComment.updated = newCommentData.updated;
-                    savedComment.issue = newCommentData.issue;
 
                     savedComment.update();
                     txn.commit();
