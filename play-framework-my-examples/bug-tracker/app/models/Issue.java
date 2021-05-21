@@ -3,9 +3,10 @@ package models;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Issue entity managed by Ebean
@@ -41,6 +42,9 @@ public class Issue extends BaseModel {
 
     @Constraints.Required
     public String description;
+
+    @OneToMany(mappedBy="issue")
+    public Set<Comment> comments;
     
     @ManyToOne
     public User user;

@@ -2,4 +2,5 @@
 
 issues.list.title={0,choice,0#No issues|1#One issue|1<{0,number,integer} issues} found
 users.list.title={0,choice,0#No users|1#One user|1<{0,number,integer} users} found
+comments.list.title={0,choice,0#No users|1#One user|1<{0,number,integer} users} found for the current user
 

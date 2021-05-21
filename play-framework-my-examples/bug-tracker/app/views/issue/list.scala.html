@@ -96,13 +96,14 @@
           @header("discontinued", "Ended")
           @header("user.name", "Assigned To")
           @header("status", "Status")
+          @header("list", "Comments")
         </tr>
       </thead>
       <tbody>
 
       @for(issue <- currentPage.getList.asScala) {
         <tr>
-          <td><a href="@routes.IssueController.edit(issue.id)">@issue.name</a></td>
+          <td><a href="@routes.IssueController.details(issue.id)">@issue.name</a></td>
           <td>
           @if(issue.application == null) {
             <em>-</em>
@@ -164,6 +165,13 @@
             <em>-</em>
           } else {
             @issue.status
+          }
+          </td>
+          <td>
+          @if(issue.comments == null) {
+            <em>-</em>
+          } else {
+            <a href="@routes.CommentController.listUserComments(issue.id, 0, "message", "asc", "")">comments</a>
           }
           </td>
         </tr>

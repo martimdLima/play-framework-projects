@@ -3,6 +3,16 @@
 
 # --- !Ups
 
+create table comment (
+  id                            bigint auto_increment not null,
+  message                       varchar(255),
+  introduced                    timestamp,
+  updated                       timestamp,
+  user_id                       bigint not null,
+  issue_id                      bigint not null,
+  constraint pk_comment primary key (id)
+);
+
 create table issue (
   id                            bigint auto_increment not null,
   name                          varchar(255),
@@ -26,14 +36,28 @@ create table user (
   constraint pk_user primary key (id)
 );
 
+create index ix_comment_user_id on comment (user_id);
+alter table comment add constraint fk_comment_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+
+create index ix_comment_issue_id on comment (issue_id);
+alter table comment add constraint fk_comment_issue_id foreign key (issue_id) references issue (id) on delete restrict on update restrict;
+
 create index ix_issue_user_id on issue (user_id);
 alter table issue add constraint fk_issue_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
 
 
 # --- !Downs
 
+alter table comment drop constraint if exists fk_comment_user_id;
+drop index if exists ix_comment_user_id;
+
+alter table comment drop constraint if exists fk_comment_issue_id;
+drop index if exists ix_comment_issue_id;
+
 alter table issue drop constraint if exists fk_issue_user_id;
 drop index if exists ix_issue_user_id;
+
+drop table if exists comment;
 
 drop table if exists issue;
 

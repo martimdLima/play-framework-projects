@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
+import repository.CommentRepository;
 import repository.IssueRepository;
 import repository.UserRepository;
 
@@ -26,6 +27,7 @@ public class IssueController extends Controller {
 
     private final IssueRepository issueRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
     private final FormFactory formFactory;
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
@@ -34,11 +36,13 @@ public class IssueController extends Controller {
     public IssueController(FormFactory formFactory,
                           IssueRepository issueRepository,
                           UserRepository userRepository,
+                           CommentRepository commentRepository,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
         this.issueRepository = issueRepository;
         this.formFactory = formFactory;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
         this.httpExecutionContext = httpExecutionContext;
         this.messagesApi = messagesApi;
     }
@@ -102,6 +106,7 @@ public class IssueController extends Controller {
         }
 
         Issue issue = issueForm.get();
+        System.out.println(issue.comments.size());
 
         // Run insert db operation, then redirect
         return issueRepository.insert(issue).thenApplyAsync(data -> {
@@ -138,6 +143,14 @@ public class IssueController extends Controller {
                         .flashing("success", "Issue " + newIssueData.name + " has been updated");
             }, httpExecutionContext.current());
         }
+    }
+
+    public CompletionStage<Result> details(Http.Request request,Long id) {
+        return issueRepository.lookup(id).thenApplyAsync((issue) -> {
+            // This is the HTTP rendering thread context
+            Issue c = issue.get();
+            return ok(views.html.issue.details.render(c,  request, messagesApi.preferred(request)));
+        }, httpExecutionContext.current());
     }
 
     /**

@@ -7,8 +7,12 @@ import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -98,4 +102,16 @@ public class IssueRepository {
              return issue.id;
         }, executionContext);
     }
+    public Map<String, String> getIssues() throws ExecutionException, InterruptedException {
+        Map<String, String> users = supplyAsync(() -> ebeanServer.find(Issue.class).orderBy("name").findList(), executionContext).thenApply(list -> {
+            HashMap<String, String> options = new LinkedHashMap<String, String>();
+            for (Issue u : list) {
+                options.put(u.id.toString(), u.name);
+            }
+            return options;
+        }).get();
+
+        return users;
+    }
+
 }
