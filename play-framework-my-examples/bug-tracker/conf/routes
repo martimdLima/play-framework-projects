@@ -3,60 +3,62 @@
 # ~~~~
 
 # Default path will just redirect to the issue list
-GET     /                          controllers.HomeController.index()
-#GET     /                           controllers.HomeController.home(request: Request)
+GET         /                           controllers.HomeController.index()
 
 # Auth
-GET     /auth                           controllers.LoginController.auth(request: Request)
-POST   /auth                           controllers.LoginController.login(request: Request)
 
-# Computers list (look at the default values for pagination parameters)
-GET     /issues                  controllers.IssueController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+## login
+GET         /auth                       controllers.LoginController.auth(request: Request)
+POST        /auth                       controllers.LoginController.login(request: Request)
 
-# Add issue
-GET     /issues/new              controllers.IssueController.create(request: Request)
-POST    /issues                  controllers.IssueController.save(request: Request)
+# Issues
 
-GET     /issuedetails/:id              controllers.IssueController.details(request: Request, id:Long)
+## Issues list (look at the default values for pagination parameters)
+GET         /issues                     controllers.IssueController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
-# Edit existing issue--
-GET     /issues/:id              controllers.IssueController.edit(request: Request, id:Long)
-POST    /issues/:id              controllers.IssueController.update(request: Request, id:Long)
+## Add issue
+GET         /issues/new                 controllers.IssueController.create(request: Request)
+POST        /issues                     controllers.IssueController.save(request: Request)
 
-# Delete a issue
-POST    /issues/:id/delete       controllers.IssueController.delete(id:Long)
+GET         /issuedetails/:id           controllers.IssueController.details(request: Request, id:Long)
 
+## Edit existing issue
+GET         /issues/:id                 controllers.IssueController.edit(request: Request, id:Long)
+POST        /issues/:id                 controllers.IssueController.update(request: Request, id:Long)
 
-# list users
-GET     /users                 controllers.UserController.listUsers(request: Request, p:Int ?= 0, s ?= "name", o ?= "desc", f ?= "")
+## Delete a issue
+POST        /issues/:id/delete          controllers.IssueController.delete(id:Long)
 
-# Add main
-GET     /users/new              controllers.UserController.userSignup(request: Request)
-POST    /users                  controllers.UserController.saveUser(request: Request)
+# Users
+## list users
+GET         /users                      controllers.UserController.listUsers(request: Request, p:Int ?= 0, s ?= "name", o ?= "desc", f ?= "")
 
-# Edit existing main--
-GET     /users/:id              controllers.UserController.editUser(request: Request, id:Long)
-POST    /users/:id              controllers.UserController.updateUser(request: Request, id:Long)
+## Add main
+GET         /users/new                  controllers.UserController.userSignup(request: Request)
+POST        /users                      controllers.UserController.saveUser(request: Request)
 
-# Delete a main
-POST    /users/:id/delete       controllers.UserController.deleteUser(id:Long)
+## Edit existing user
+GET         /users/:id                  controllers.UserController.editUser(request: Request, id:Long)
+POST        /users/:id                  controllers.UserController.updateUser(request: Request, id:Long)
 
-# Add comments
-GET     /comments/new              controllers.CommentController.create(request: Request, id:Long)
-POST    /comments                  controllers.CommentController.save(request: Request, id:Long)
+## Delete a user
+POST        /users/:id/delete           controllers.UserController.deleteUser(id:Long)
 
 # Comments
-GET /comments/list/:id               controllers.CommentController.listUserComments(request: Request, id:Long, p:Int ?= 0, s ?= "introduced", o ?= "asc", f ?= "")
+## Add comments
+GET         /comments/new               controllers.CommentController.create(request: Request, id:Long)
+POST        /comments                   controllers.CommentController.save(request: Request, id:Long)
 
-# Edit existing main--
-GET     /comments/:id              controllers.CommentController.edit(request: Request, id:Long)
-POST    /comments/:id              controllers.CommentController.update(request: Request, id:Long)
+## lists all Comments
+GET         /comments/list/:id        controllers.CommentController.list(request: Request, id:Long, p:Int ?= 0, s ?= "introduced", o ?= "asc", f ?= "")
 
-# Delete a main
-POST    /comments/:id/delete       controllers.CommentController.delete(id:Long)
+# Edit existing commnet
+GET         /comments/:id               controllers.CommentController.edit(request: Request, id:Long)
+POST        /comments/:id               controllers.CommentController.update(request: Request, id:Long)
 
-
+# Delete a comment
+POST        /comments/:id/delete        controllers.CommentController.delete(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file               controllers.Assets.at(path="/public", file)
 

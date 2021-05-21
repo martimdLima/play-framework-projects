@@ -1,99 +1,101 @@
 @(id: Long, issueForm: Form[Issue], users: Map[String, String], applications: List[String], categories: List[String], statuses: List[String])(implicit request: Http.Request, messages: play.i18n.Messages)
 
-@import helper._
+    @import helper._
 
-@implicitField = @{ FieldConstructor(tags.forms.field_constructor.render) }
-
-@main {
-
-    <h1 class="my-3" id="page-title">Edit issue</h1>
-
-    @form(routes.IssueController.update(id)) {
-
-        @CSRF.formField
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputText(issueForm("name"), Symbol("_label") -> "title", Symbol("_help") -> "")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputDate(issueForm("introduced"), Symbol("_label") -> "Created", Symbol("_help") -> "")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputDate(issueForm("updated"), Symbol("_label") -> "Updated", Symbol("_help") -> "")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputDate(issueForm("discontinued"), Symbol("_label") -> "Ended", Symbol("_help") -> "")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @select(
-                issueForm("application"),
-                options(applications),
-                Symbol("_label") -> "Assigned Application", Symbol("_default") -> "-- Choose a application --",
-                Symbol("_showConstraints") -> false
-            )
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @select(
-                issueForm("category"),
-                options(categories),
-                Symbol("_label") -> "Assigned Category", Symbol("_default") -> "-- Choose a category --",
-                Symbol("_showConstraints") -> false
-            )
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @select(
-                issueForm("status"),
-                options(statuses),
-                Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
-                Symbol("_showConstraints") -> false
-            )
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputText(issueForm("summary"), Symbol("_label") -> "summary", Symbol("_help") -> "")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @inputText(issueForm("description"), Symbol("_label") -> "description", Symbol("_help") -> "")
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3 mb-3">
-            @select(
-                issueForm("user.id"),
-                options(users),
-                Symbol("_label") -> "Assigned User", Symbol("_default") -> "-- Choose a user --",
-                Symbol("_showConstraints") -> false
-            )
-            </div>
-        </div>
-
-        <div class="actions">
-            <button class="btn btn-success" type="submit">Save this issue</button>
-            <span class="mx-2">or</span>
-            <a href="@routes.IssueController.list()" id="add" class="btn btn-light" role="button">Cancel</a>
-        </div>
-
+    @implicitField = @{
+        FieldConstructor(tags.forms.field_constructor.render)
     }
 
-    @form(routes.IssueController.delete(id), Symbol("class") -> "top-right") {
-        @CSRF.formField
-        <button class="btn btn-danger" type="submit">Delete this issue</button>
-    }
+    @main {
 
-}
+        <h1 class="my-3" id="page-title">Edit issue</h1>
+
+        @form(routes.IssueController.update(id)) {
+
+            @CSRF.formField
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputText(issueForm("name"), Symbol("_label") -> "title", Symbol("_help") -> "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputDate(issueForm("introduced"), Symbol("_label") -> "Created", Symbol("_help") -> "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputDate(issueForm("updated"), Symbol("_label") -> "Updated", Symbol("_help") -> "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputDate(issueForm("discontinued"), Symbol("_label") -> "Ended", Symbol("_help") -> "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @select(
+                    issueForm("application"),
+                    options(applications),
+                    Symbol("_label") -> "Assigned Application", Symbol("_default") -> "-- Choose a application --",
+                    Symbol("_showConstraints") -> false
+                )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @select(
+                    issueForm("category"),
+                    options(categories),
+                    Symbol("_label") -> "Assigned Category", Symbol("_default") -> "-- Choose a category --",
+                    Symbol("_showConstraints") -> false
+                )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @select(
+                    issueForm("status"),
+                    options(statuses),
+                    Symbol("_label") -> "Assigned Status", Symbol("_default") -> "-- Choose a status --",
+                    Symbol("_showConstraints") -> false
+                )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputText(issueForm("summary"), Symbol("_label") -> "summary", Symbol("_help") -> "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @inputText(issueForm("description"), Symbol("_label") -> "description", Symbol("_help") -> "")
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                @select(
+                    issueForm("user.id"),
+                    options(users),
+                    Symbol("_label") -> "Assigned User", Symbol("_default") -> "-- Choose a user --",
+                    Symbol("_showConstraints") -> false
+                )
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-success" type="submit">Save this issue</button>
+                <span class="mx-2">or</span>
+                <a href="@routes.IssueController.list()" id="add" class="btn btn-light" role="button">Cancel</a>
+            </div>
+
+        }
+
+        @form(routes.IssueController.delete(id), Symbol("class") -> "top-right") {
+            @CSRF.formField
+            <button class="btn btn-danger" type="submit">Delete this issue</button>
+        }
+
+    }

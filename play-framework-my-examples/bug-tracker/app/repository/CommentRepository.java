@@ -2,15 +2,12 @@ package repository;
 
 import io.ebean.*;
 import models.Comment;
-import models.Comment;
 import models.Issue;
-import models.User;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Optional;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -25,6 +22,15 @@ public class CommentRepository {
         this.executionContext = executionContext;
     }
 
+    public CompletionStage<PagedList<Comment>> pageAll(int page, int pageSize, String sortBy, String order, String filter) {
+        return supplyAsync(() ->
+                ebeanServer.find(Comment.class).where()
+                        .ilike("message", "%" + filter + "%")
+                        .orderBy(sortBy + " " + order)
+                        .setFirstRow(page * pageSize)
+                        .setMaxRows(pageSize)
+                        .findPagedList(), executionContext);
+    }
 
     public CompletionStage<PagedList<Comment>> page(long id, int page, int pageSize, String sortBy, String order, String filter) {
         String issueToFilter = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne()).get().name;
@@ -75,7 +81,7 @@ public class CommentRepository {
         }, executionContext);
     }
 
-    public CompletionStage<Optional<Long>>  delete(Long id) {
+    public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
                 final Optional<Comment> issueOptional = Optional.ofNullable(ebeanServer.find(Comment.class).setId(id).findOne());

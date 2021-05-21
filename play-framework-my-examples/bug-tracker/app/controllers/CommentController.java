@@ -1,9 +1,7 @@
 package controllers;
 
 import models.Comment;
-import models.Comment;
 import models.Issue;
-import models.User;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -17,14 +15,11 @@ import repository.UserRepository;
 
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
-import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 
 public class CommentController {
@@ -36,6 +31,13 @@ public class CommentController {
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
+    /**
+     * This result directly redirect to Comment list.
+     */
+    private final Result GO_HOME = Results.redirect(
+            routes.IssueController.list(0, "name", "asc", "")
+    );
+
     @Inject
     public CommentController(IssueRepository issueRepository, UserRepository userRepository, CommentRepository commentRepository, FormFactory formFactory, HttpExecutionContext httpExecutionContext, MessagesApi messagesApi) {
         this.issueRepository = issueRepository;
@@ -46,21 +48,32 @@ public class CommentController {
         this.messagesApi = messagesApi;
     }
 
-    /**
-     * This result directly redirect to Comment list.
-     */
-    private Result GO_HOME = Results.redirect(
-            routes.IssueController.list(0, "name", "asc", "")
-    );
 
-    public CompletionStage<Result> listUserComments(Http.Request request, long id, int page, String sortBy, String order, String filter) {
+    /**
+     * @param request
+     * @param id
+     * @param page
+     * @param sortBy
+     * @param order
+     * @param filter
+     * @return
+     */
+    public CompletionStage<Result> list(Http.Request request, long id, int page, String sortBy, String order, String filter) {
         // Run a db operation in another thread (using DatabaseExecutionContext)
-        return commentRepository.page(id, page, 10, sortBy, order, filter).thenApplyAsync(list -> {
+        return commentRepository.page(id, page, 10, sortBy, order, filter).thenApplyAsync(comments -> {
             // This is the HTTP rendering thread context
-            return ok(views.html.comments.list.render(list, sortBy, order, filter, request, messagesApi.preferred(request)));
+            return ok(views.html.comments.list.render(comments, id, sortBy, order, filter, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
+
+    /**
+     * @param request
+     * @param id
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public CompletionStage<Result> create(Http.Request request, long id) throws ExecutionException, InterruptedException {
         Form<Comment> commentForm = formFactory.form(Comment.class);
 
@@ -75,8 +88,15 @@ public class CommentController {
         }, httpExecutionContext.current());
     }
 
+
     /**
      * Handle the 'new Comment form' submission
+     *
+     * @param request
+     * @param id
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     public CompletionStage<Result> save(Http.Request request, Long id) throws ExecutionException, InterruptedException {
         Form<Comment> commentForm = formFactory.form(Comment.class).bindFromRequest(request);
@@ -87,7 +107,7 @@ public class CommentController {
 
         if (commentForm.hasErrors()) {
             // Run issues db operation and then render the form
-            return issueRepository.page(0, 10,"name", "asc", "").thenApplyAsync(nul -> {
+            return issueRepository.page(0, 10, "name", "asc", "").thenApplyAsync(nul -> {
                 // This is the HTTP rendering thread context
                 return ok(views.html.comments.createForm.render(id, commentForm, users, issues, request, messagesApi.preferred(request)));
             }, httpExecutionContext.current());
@@ -107,7 +127,12 @@ public class CommentController {
     /**
      * Handle the 'edit form' submission
      *
-     * @param id Id of the issue to edit
+     * @param request
+     * @param id      Id of the issue to edit
+     * @return
+     * @throws PersistenceException
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     public CompletionStage<Result> update(Http.Request request, Long id) throws PersistenceException, ExecutionException, InterruptedException {
         Form<Comment> commentForm = formFactory.form(Comment.class).bindFromRequest(request);
@@ -134,12 +159,17 @@ public class CommentController {
         }
     }
 
+
     /**
      * Display the 'edit form' of a existing comment.
      *
-     * @param id Id of the comment to edit
+     * @param request
+     * @param id      Id of the comment to edit
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
-    public CompletionStage<Result> edit(Http.Request request,Long id) throws ExecutionException, InterruptedException {
+    public CompletionStage<Result> edit(Http.Request request, Long id) throws ExecutionException, InterruptedException {
 
         final Map<String, String> users = userRepository.getUsers();
         final Map<String, String> issues = new HashMap<>();
@@ -154,12 +184,16 @@ public class CommentController {
             // This is the HTTP rendering thread context
             Comment comment = commentOptional.get();
             Form<Comment> commentForm = formFactory.form(Comment.class).fill(comment);
-            return ok(views.html.comments.editForm.render(id, commentForm, users, issues,  request, messagesApi.preferred(request)));
+            return ok(views.html.comments.editForm.render(id, commentForm, users, issues, request, messagesApi.preferred(request)));
         }, httpExecutionContext.current());
     }
 
+
     /**
      * Handle user deletion
+     *
+     * @param id
+     * @return
      */
     public CompletionStage<Result> delete(Long id) {
         // Run delete db operation, then redirect

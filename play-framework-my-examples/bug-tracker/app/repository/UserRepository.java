@@ -70,10 +70,10 @@ public class UserRepository {
             List<User> users = ebeanServer.find(User.class).findList();
 
             User foundUser = new User();
-            for(int i = 0; i < users.size(); i++) {
+            for (int i = 0; i < users.size(); i++) {
 
-                if(users.get(i).email.equals(email)) {
-                      foundUser = users.get(i);
+                if (users.get(i).email.equals(email)) {
+                    foundUser = users.get(i);
                 }
             }
 
@@ -112,7 +112,7 @@ public class UserRepository {
         }, executionContext);
     }
 
-    public CompletionStage<Optional<Long>>  delete(Long id) {
+    public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
                 final Optional<Issue> userOptional = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne());

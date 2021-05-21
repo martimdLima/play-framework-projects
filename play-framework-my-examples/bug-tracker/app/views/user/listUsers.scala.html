@@ -4,11 +4,10 @@
         currentFilter: String)(
         implicit request: Http.Request,
         messages: play.i18n.Messages)
-
 @****************************************
-* Helper generating navigation links    *
+* Helper generating navigation links *
 ****************************************@
-@link(newPage:Int, newSortBy:String) = @{
+@link(newPage: Int, newSortBy: String) = @{
 
     var sortBy = currentSortBy
     var order = currentOrder
@@ -34,14 +33,14 @@
     @**********************************
     * Helper generating table headers *
     ***********************************@
-@header(key:String, title:String) = {
-    <th scope="col" class="@key.replace("../../../public","_")">
+@header(key: String, title: String) = {
+    <th scope="col" class="@key.replace("../../../public", "_")">
         <a class="sort-link @if(currentSortBy != key) { sort-link-inactive }" href="@link(0, key)">@title @sortIcon(key)</a>
     </th>
 }
 
 
-@sortIcon(key:String) = {
+@sortIcon(key: String) = {
 @if(currentOrder == "asc") {
     <i class="fa fa-fw fa-caret-down"></i>
 } else {
@@ -117,7 +116,7 @@
                     </li>
                 }
                 <li class="page-item disabled" aria-current="page">
-                    <a class="page-link" href="#">Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                    <a class="page-link" href="#">Displaying @currentPage.getDisplayXtoYofZ(" to ", " of ")</a>
                 </li>
                 @if(currentPage.hasNext) {
                     <li class="page-item next">

@@ -2,11 +2,9 @@ package repository;
 
 import io.ebean.*;
 import models.Issue;
-
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,12 +41,12 @@ public class IssueRepository {
     public CompletionStage<PagedList<Issue>> page(int page, int pageSize, String sortBy, String order, String filter) {
         return supplyAsync(() ->
                 ebeanServer.find(Issue.class).where()
-                    .ilike("name", "%" + filter + "%")
-                    .orderBy(sortBy + " " + order)
-                    .fetch("user")
-                    .setFirstRow(page * pageSize)
-                    .setMaxRows(pageSize)
-                    .findPagedList(), executionContext);
+                        .ilike("name", "%" + filter + "%")
+                        .orderBy(sortBy + " " + order)
+                        .fetch("user")
+                        .setFirstRow(page * pageSize)
+                        .setMaxRows(pageSize)
+                        .findPagedList(), executionContext);
     }
 
     public CompletionStage<Optional<Issue>> lookup(Long id) {
@@ -83,7 +81,7 @@ public class IssueRepository {
         }, executionContext);
     }
 
-    public CompletionStage<Optional<Long>>  delete(Long id) {
+    public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
                 final Optional<Issue> issueOptional = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne());
@@ -97,11 +95,12 @@ public class IssueRepository {
 
     public CompletionStage<Long> insert(Issue issue) {
         return supplyAsync(() -> {
-             issue.id = System.currentTimeMillis(); // not ideal, but it works
-             ebeanServer.insert(issue);
-             return issue.id;
+            issue.id = System.currentTimeMillis(); // not ideal, but it works
+            ebeanServer.insert(issue);
+            return issue.id;
         }, executionContext);
     }
+
     public Map<String, String> getIssues() throws ExecutionException, InterruptedException {
         Map<String, String> users = supplyAsync(() -> ebeanServer.find(Issue.class).orderBy("name").findList(), executionContext).thenApply(list -> {
             HashMap<String, String> options = new LinkedHashMap<String, String>();

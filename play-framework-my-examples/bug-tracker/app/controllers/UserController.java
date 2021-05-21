@@ -25,6 +25,12 @@ public class UserController extends Controller {
     private final FormFactory formFactory;
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
+    /**
+     * This result directly redirect to the user list
+     */
+    private final Result GO_HOME = Results.redirect(
+            routes.UserController.listUsers(0, "name", "asc", "")
+    );
 
     @Inject
     public UserController(FormFactory formFactory,
@@ -36,13 +42,6 @@ public class UserController extends Controller {
         this.httpExecutionContext = httpExecutionContext;
         this.messagesApi = messagesApi;
     }
-
-    /**
-     * This result directly redirect to the user list
-     */
-    private Result GO_HOME = Results.redirect(
-            routes.UserController.listUsers(0, "name", "asc", "")
-    );
 
     /**
      * Display the paginated list of users.
@@ -100,7 +99,7 @@ public class UserController extends Controller {
      *
      * @param id Id of the user to edit
      */
-    public CompletionStage<Result> editUser(Http.Request request,Long id) {
+    public CompletionStage<Result> editUser(Http.Request request, Long id) {
 
         // Run a db operation in another thread (using DatabaseExecutionContext)
         CompletionStage<Map<String, String>> usersFuture = userRepository.options();

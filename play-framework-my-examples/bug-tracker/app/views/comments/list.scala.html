@@ -1,14 +1,14 @@
 @(currentPage: io.ebean.PagedList[Comment],
+        id: Long,
         currentSortBy: String,
         currentOrder: String,
         currentFilter: String)(
         implicit request: Http.Request,
         messages: play.i18n.Messages)
-
 @****************************************
-* Helper generating navigation links    *
+* Helper generating navigation links *
 ****************************************@
-@link(newPage:Int, newSortBy:String) = @{
+@link(newPage: Int, newSortBy: String) = @{
 
     var sortBy = currentSortBy
     var order = currentOrder
@@ -27,21 +27,20 @@
     }
 
     // Generate the link
-    routes.IssueController.list(newPage, sortBy, order, currentFilter)
-
+    routes.CommentController.list(id)
 }
 
     @**********************************
     * Helper generating table headers *
     ***********************************@
-@header(key:String, title:String) = {
-    <th scope="col" class="@key.replace("../../../public","_")">
+@header(key: String, title: String) = {
+    <th scope="col" class="@key.replace("../../../public", "_")">
         <a class="sort-link @if(currentSortBy != key) { sort-link-inactive }" href="@link(0, key)">@title @sortIcon(key)</a>
     </th>
 }
 
 
-@sortIcon(key:String) = {
+@sortIcon(key: String) = {
 @if(currentOrder == "asc") {
     <i class="fa fa-fw fa-caret-down"></i>
 } else {
@@ -62,16 +61,13 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <form class="form-inline" action="@link(0, "name")" method="GET">
+            <form class="form-inline" action="@link(0, "message")" method="GET">
                 <div class="form-group mr-sm-2 mb-2">
                     <label for="searchbox" class="sr-only">Filter by Comment message...</label>
                     <input type="search" class="form-control" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by comment message...">
                 </div>
                 <button type="submit" id="searchsubmit" class="btn btn-primary mb-2">Filter by message</button>
             </form>
-        </div>
-        <div class="col-sm-6">
-            <!--<a href="@routes.CommentController." id="add" class="btn btn-success float-right" role="button"1>Add a new issue</a>-->
         </div>
     </div>
 
@@ -133,7 +129,6 @@
                     }
                     </td>
 
-
                 </tr>
             }
 
@@ -153,7 +148,7 @@
                     </li>
                 }
                 <li class="page-item disabled" aria-current="page">
-                    <a class="page-link" href="#">Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                    <a class="page-link" href="#">Displaying @currentPage.getDisplayXtoYofZ(" to ", " of ")</a>
                 </li>
                 @if(currentPage.hasNext) {
                     <li class="page-item next">
