@@ -1,0 +1,41 @@
+@(issue: Issue)(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+
+@main {
+
+    @request.flash.asScala().get("success").map { successFlashValue =>
+        <div class="alert alert-warning" role="alert">
+            <strong>Done!</strong> @successFlashValue
+        </div>
+    }
+
+    <div class="card text-center">
+        <div class="card-header">
+            @issue.name
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@issue.application</h5>
+            <h5 class="card-title">@issue.category</h5>
+            <h5 class="card-title">@issue.status</h5>
+            <h4 class="card-title">@issue.introduced</h4>
+            <h4 class="card-title">@issue.updated</h4>
+            <h4 class="card-title">@issue.discontinued</h4>
+            <p class="card-text">@issue.summary</p>
+            <p class="card-text">@issue.description</p>
+        </div>
+        <div class="card-body">
+            @for(i <- issue.comments) {
+                @i.message
+            }
+        </div>
+        <div class="card-footer text-muted">
+            <p>@issue.user.name</p>
+            <a href="@routes.IssueController.edit(issue.id)" class="btn btn-primary">Edit Issue</a>
+            <a href="@routes.CommentController.create(issue.id)" class="btn btn-primary">Comment</a>
+            <a href="@routes.IssueController.list()" class="btn btn-danger">Cancel</a>
+        </div>
+    </div>
+
+
+}
