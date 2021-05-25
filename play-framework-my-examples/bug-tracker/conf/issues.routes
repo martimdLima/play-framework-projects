@@ -1,0 +1,10 @@
+GET           /           api.IssueController.getAll()
+
+GET           /:id        api.IssueController.get(request:Request, id:Long)
+
+POST          /           api.IssueController.create(request:Request)
+
+PUT           /:id        api.IssueController.update(request:Request, id:Long)
+
+DELETE        /:id        api.IssueController.delete(id:Long)
+

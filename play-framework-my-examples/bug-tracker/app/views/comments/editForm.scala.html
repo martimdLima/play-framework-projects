@@ -1,0 +1,48 @@
+@(id: Long, commentForm: Form[Comment], users: Map[String, String], issues: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@
+
+@implicitField = @{
+    FieldConstructor(tags.forms.field_constructor.render)
+}
+
+@main {
+
+    <h1 class="my-3" id="page-title">Edit your Comment</h1>
+
+    @form(routes.CommentController.update(id)) {
+
+        @CSRF.formField
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(commentForm("message"), Symbol("_label") -> "title", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputDate(commentForm("updated"), Symbol("_label") -> "Updated", Symbol("_help") -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @select(
+                commentForm("user.id"),
+                options(users),
+                Symbol("_label") -> "Assigned User", Symbol("_default") -> "-- Choose a user --",
+                Symbol("_showConstraints") -> false
+            )
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" type="submit">Create Comment</button>
+            <span class="mx-2">or</span>
+            <a href="@routes.IssueController.details(id)" id="add" class="btn btn-light" role="button">Cancel</a>
+        </div>
+    }
+
+    @form(routes.CommentController.delete(id), Symbol("class") -> "top-right") {
+        @CSRF.formField
+        <button class="btn btn-danger" type="submit">Delete this issue</button>
+    }
+}
