@@ -1,7 +1,5 @@
 @(issue: Issue)(implicit request: Http.Request, messages: play.i18n.Messages)
 
-@
-
 @main {
 
         @request.flash.asScala().get("success").map { successFlashValue =>

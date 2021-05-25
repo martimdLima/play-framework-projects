@@ -5,6 +5,16 @@
 # Default path will just redirect to the issue list
 GET         /                           controllers.HomeController.index()
 
+# REST API
+## Users
+-> /api/users/                           users.Routes
+
+## Issues
+-> /api/issues/                           issues.Routes
+
+## Comments
+-> /api/comments/                           comments.Routes
+
 # Auth
 
 ## login

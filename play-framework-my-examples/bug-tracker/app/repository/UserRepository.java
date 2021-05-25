@@ -57,6 +57,11 @@ public class UserRepository {
                         .findPagedList(), executionContext);
     }
 
+    public CompletionStage<List<User>> list() {
+        return supplyAsync(() ->
+                ebeanServer.find(User.class).findList(), executionContext);
+    }
+
     public CompletionStage<Optional<User>> lookup(Long id) {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(id).findOne()), executionContext);
     }
@@ -115,13 +120,17 @@ public class UserRepository {
     public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
-                final Optional<Issue> userOptional = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne());
+                final Optional<User> userOptional = Optional.ofNullable(ebeanServer.find(User.class).setId(id).findOne());
                 userOptional.ifPresent(Model::delete);
                 return userOptional.map(c -> c.id);
             } catch (Exception e) {
                 return Optional.empty();
             }
         }, executionContext);
+    }
+
+    public User getUser(long id) {
+        return ebeanServer.find(User.class).setId(id).findOne();
     }
 
     public Map<String, String> getUsers() throws ExecutionException, InterruptedException {

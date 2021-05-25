@@ -103,7 +103,11 @@ public class CommentController {
 
         final Map<String, String> users = userRepository.getUsers();
         final Map<String, String> issues = new HashMap<>();
-        issues.put(issueRepository.lookup(id).toCompletableFuture().join().get().id.toString(), issueRepository.lookup(id).toCompletableFuture().join().get().name);
+
+        Issue issue = issueRepository.lookup(id).toCompletableFuture().join().get();
+        //issue.comments.add(commentForm.get());
+
+        issues.put(issue.id.toString(), issue.name);
 
         if (commentForm.hasErrors()) {
             // Run issues db operation and then render the form

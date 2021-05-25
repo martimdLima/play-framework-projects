@@ -3,9 +3,11 @@ package repository;
 import io.ebean.*;
 import models.Comment;
 import models.Issue;
+import models.User;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
@@ -22,16 +24,6 @@ public class CommentRepository {
         this.executionContext = executionContext;
     }
 
-    public CompletionStage<PagedList<Comment>> pageAll(int page, int pageSize, String sortBy, String order, String filter) {
-        return supplyAsync(() ->
-                ebeanServer.find(Comment.class).where()
-                        .ilike("message", "%" + filter + "%")
-                        .orderBy(sortBy + " " + order)
-                        .setFirstRow(page * pageSize)
-                        .setMaxRows(pageSize)
-                        .findPagedList(), executionContext);
-    }
-
     public CompletionStage<PagedList<Comment>> page(long id, int page, int pageSize, String sortBy, String order, String filter) {
         String issueToFilter = Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne()).get().name;
         return supplyAsync(() ->
@@ -42,6 +34,11 @@ public class CommentRepository {
                         .setFirstRow(page * pageSize)
                         .setMaxRows(pageSize)
                         .findPagedList(), executionContext);
+    }
+
+    public CompletionStage<List<Comment>> list() {
+        return supplyAsync(() ->
+                ebeanServer.find(Comment.class).findList(), executionContext);
     }
 
     public CompletionStage<Long> insert(Comment comment) {

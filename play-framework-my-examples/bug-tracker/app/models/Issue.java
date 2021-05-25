@@ -43,10 +43,10 @@ public class Issue extends BaseModel {
     @Constraints.Required
     public String description;
 
-    @OneToMany(mappedBy="issue")
-    public Set<Comment> comments;
-    
-    @ManyToOne
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Comment> comments;
+
+    @ManyToOne(optional=false)
     public User user;
     
 }

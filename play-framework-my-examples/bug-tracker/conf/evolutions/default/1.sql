@@ -8,8 +8,8 @@ create table comment (
   message                       varchar(255),
   introduced                    timestamp,
   updated                       timestamp,
-  user_id                       bigint not null,
-  issue_id                      bigint not null,
+  user_id                       bigint,
+  issue_id                      bigint,
   constraint pk_comment primary key (id)
 );
 
@@ -24,7 +24,7 @@ create table issue (
   status                        varchar(255),
   summary                       varchar(255),
   description                   varchar(255),
-  user_id                       bigint,
+  user_id                       bigint not null,
   constraint pk_issue primary key (id)
 );
 

@@ -2,13 +2,11 @@ package repository;
 
 import io.ebean.*;
 import models.Issue;
+import models.User;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -47,6 +45,11 @@ public class IssueRepository {
                         .setFirstRow(page * pageSize)
                         .setMaxRows(pageSize)
                         .findPagedList(), executionContext);
+    }
+
+    public CompletionStage<List<Issue>> list() {
+        return supplyAsync(() ->
+                ebeanServer.find(Issue.class).findList(), executionContext);
     }
 
     public CompletionStage<Optional<Issue>> lookup(Long id) {

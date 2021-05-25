@@ -106,7 +106,6 @@ public class IssueController extends Controller {
         }
 
         Issue issue = issueForm.get();
-        System.out.println(issue.comments.size());
 
         // Run insert db operation, then redirect
         return issueRepository.insert(issue).thenApplyAsync(data -> {

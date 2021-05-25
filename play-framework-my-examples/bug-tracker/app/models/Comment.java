@@ -21,10 +21,8 @@ public class Comment extends BaseModel {
     public Date updated;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     public User user;
 
     @ManyToOne
-    @JoinColumn(name = "issue_id", nullable = false)
     public Issue issue;
 }
