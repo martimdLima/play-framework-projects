@@ -39,7 +39,7 @@ public class Issue extends BaseModel {
     @Constraints.Required
     public String description;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    User user;
+    public User user;
 
     public String getName() {
         return name;

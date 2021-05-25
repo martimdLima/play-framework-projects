@@ -27,6 +27,14 @@ public class IssueController extends Controller {
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
+    /**
+     * @param formFactory
+     * @param issueRepository
+     * @param userRepository
+     * @param commentRepository
+     * @param httpExecutionContext
+     * @param messagesApi
+     */
     @Inject
     public IssueController(FormFactory formFactory,
                            IssueRepository issueRepository,
@@ -42,6 +50,11 @@ public class IssueController extends Controller {
         this.messagesApi = messagesApi;
     }
 
+    /**
+     * Gets all the Issues
+     *
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> getAll() {
 
         return issueRepository.list().thenApplyAsync(payload -> {
@@ -53,7 +66,13 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Gets a Issue
+     *
+     * @param request
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> get(Http.Request request, long id) {
 
         return issueRepository.lookup(id).thenApplyAsync(payload -> {
@@ -67,7 +86,12 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Create a Issue
+     *
+     * @param request
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> create(Http.Request request) {
         JsonNode json = request.body().asJson();
         final Issue issue = Json.fromJson(json, Issue.class);
@@ -76,7 +100,13 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Update a Issue
+     *
+     * @param request
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> update(Http.Request request, long id) {
         JsonNode json = request.body().asJson();
         Issue resource = Json.fromJson(json, Issue.class);
@@ -92,7 +122,12 @@ public class IssueController extends Controller {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Delete a Issue
+     *
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> delete(Long id) {
 
         return issueRepository.delete(id).thenApplyAsync(savedResource -> {

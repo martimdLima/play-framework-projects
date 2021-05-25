@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
+/**
+ * Comment entity managed by Ebean
+ */
 @Entity
 public class Comment extends BaseModel {
 
@@ -27,7 +30,6 @@ public class Comment extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
 
     public Issue getIssue() {
         return issue;

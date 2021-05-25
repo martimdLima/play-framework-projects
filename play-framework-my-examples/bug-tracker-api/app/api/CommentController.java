@@ -29,6 +29,14 @@ public class CommentController {
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
+    /**
+     * @param issueRepository
+     * @param userRepository
+     * @param commentRepository
+     * @param formFactory
+     * @param httpExecutionContext
+     * @param messagesApi
+     */
     @Inject
     public CommentController(IssueRepository issueRepository, UserRepository userRepository, CommentRepository commentRepository, FormFactory formFactory, HttpExecutionContext httpExecutionContext, MessagesApi messagesApi) {
         this.issueRepository = issueRepository;
@@ -39,7 +47,11 @@ public class CommentController {
         this.messagesApi = messagesApi;
     }
 
-
+    /**
+     * Gets all the Comments
+     *
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> getAll() {
 
         return commentRepository.list().thenApplyAsync(payload -> {
@@ -54,42 +66,46 @@ public class CommentController {
         }, httpExecutionContext.current());
     }
 
-
-    /*
-    public CompletionStage<Result> getAll() {
-        return commentRepository.list().thenApplyAsync(payload -> {
-            System.out.println(payload);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonData = mapper.convertValue(payload, JsonNode.class);
-
-            return ok(Util.createResponse(Json.toJson(jsonData), true));
-        }, httpExecutionContext.current());
-    }*/
-
+    /**
+     * Gets a specific Comment
+     *
+     * @param request
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> get(Http.Request request, long id) {
 
-        return commentRepository.lookup(id).thenApplyAsync(cmmt -> {
+        return commentRepository.lookup(id).thenApplyAsync(payload -> {
 
-            Comment comment = cmmt.get();
+            Comment comment = payload.get();
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonData = mapper.convertValue(comment, JsonNode.class);
             return ok(Util.createResponse(jsonData, true));
-            //return ok(Util.createResponse(Json.toJson(CommentBO.generate(comment)), true));
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Creates a new Comment
+     *
+     * @param request
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> create(Http.Request request) {
         JsonNode json = request.body().asJson();
         final Comment comment = Json.fromJson(json, Comment.class);
-        //comment.user = userRepository.getUser(comment.user.id);
-        //comment.issue = issueRepository.getIssue(comment.issue.id);
         return commentRepository.insert(comment).thenApplyAsync(savedResource -> {
             return created(Json.toJson(savedResource));
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Updates an existing comment
+     *
+     * @param request
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> update(Http.Request request, long id) {
         JsonNode json = request.body().asJson();
         Comment resource = Json.fromJson(json, Comment.class);
@@ -105,7 +121,12 @@ public class CommentController {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Deltes a Comment
+     *
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> delete(Long id) {
 
         return commentRepository.delete(id).thenApplyAsync(savedResource -> {

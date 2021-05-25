@@ -26,25 +26,15 @@ public class UserRepository {
         this.executionContext = executionContext;
     }
 
-    public CompletionStage<Map<String, String>> options() {
-        return supplyAsync(() -> ebeanServer.find(User.class).orderBy("name").findList(), executionContext)
-                .thenApply(list -> {
-                    HashMap<String, String> options = new LinkedHashMap<String, String>();
-                    for (User c : list) {
-                        options.put(c.id.toString(), c.name);
-                    }
-                    return options;
-                });
-    }
-
     /**
-     * Return a paged list of computer
+     * Return a paged list of User
      *
      * @param page     Page to display
-     * @param pageSize Number of computers per page
+     * @param pageSize Number of users per page
      * @param sortBy   Computer property used for sorting
      * @param order    Sort order (either or asc or desc)
      * @param filter   Filter applied on the name column
+     * @return CCompletionStage<PagedList < User>>
      */
     public CompletionStage<PagedList<User>> page(int page, int pageSize, String sortBy, String order, String filter) {
         return supplyAsync(() ->
@@ -56,19 +46,42 @@ public class UserRepository {
                         .findPagedList(), executionContext);
     }
 
+    /**
+     * Return a list of User
+     *
+     * @ return CompletionStage<List<User>>
+     */
     public CompletionStage<List<User>> list() {
         return supplyAsync(() ->
                 ebeanServer.find(User.class).findList(), executionContext);
     }
 
+    /**
+     * Retrieve a specific User
+     *
+     * @param id The id of the user to retrieve
+     * @return CompletionStage<Optional < User>>
+     */
     public CompletionStage<Optional<User>> lookup(Long id) {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(id).findOne()), executionContext);
     }
 
+    /**
+     * Retrieve a specific User by email
+     *
+     * @param email The email of the user to retrieve
+     * @return CompletionStage<Optional < User>>
+     */
     public CompletionStage<Optional<User>> lookupByEmail(String email) {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(email).findOne()), executionContext);
     }
 
+    /**
+     * Retrieve a specific User by email
+     *
+     * @param email The id of the user to retrieve
+     * @return CompletionStage<Optional < User>>
+     */
     public CompletionStage<User> retrieveUserByEmail(String email) {
         return supplyAsync(() -> {
             List<User> users = ebeanServer.find(User.class).findList();
@@ -86,6 +99,12 @@ public class UserRepository {
         }, executionContext);
     }
 
+    /**
+     * Creates a new User
+     *
+     * @param user
+     * @return
+     */
     public CompletionStage<Long> insert(User user) {
         return supplyAsync(() -> {
             user.id = System.currentTimeMillis(); // not ideal, but it works
@@ -94,6 +113,13 @@ public class UserRepository {
         }, executionContext);
     }
 
+    /**
+     * Updates a specific User
+     *
+     * @param id
+     * @param newUserData
+     * @return CompletionStage<Optional < Long>>
+     */
     public CompletionStage<Optional<Long>> update(Long id, User newUserData) {
         return supplyAsync(() -> {
             Transaction txn = ebeanServer.beginTransaction();
@@ -116,6 +142,12 @@ public class UserRepository {
         }, executionContext);
     }
 
+    /**
+     * Deletes a specific User
+     *
+     * @param id
+     * @return CompletionStage<Optional < Long>>
+     */
     public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
@@ -128,10 +160,21 @@ public class UserRepository {
         }, executionContext);
     }
 
+    /**
+     * Returns a specific User
+     *
+     * @param id
+     * @return User
+     */
     public User getUser(long id) {
         return ebeanServer.find(User.class).setId(id).findOne();
     }
 
+    /**
+     * Returns a List of User
+     *
+     * @return List<User>
+     */
     public Map<String, String> getUsers() throws ExecutionException, InterruptedException {
         Map<String, String> users = supplyAsync(() -> ebeanServer.find(User.class).orderBy("name").findList(), executionContext).thenApply(list -> {
             HashMap<String, String> options = new LinkedHashMap<String, String>();
@@ -143,6 +186,4 @@ public class UserRepository {
 
         return users;
     }
-
-
 }

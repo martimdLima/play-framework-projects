@@ -25,7 +25,11 @@ public class UserController extends Controller {
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
-
+    /**
+     * @param userRepository
+     * @param httpExecutionContext
+     * @param messagesApi
+     */
     @Inject
     public UserController(UserRepository userRepository,
                           HttpExecutionContext httpExecutionContext,
@@ -35,6 +39,12 @@ public class UserController extends Controller {
         this.messagesApi = messagesApi;
     }
 
+    /**
+     * Gets all the Users
+     *
+     * @param request
+     * @return
+     */
     public CompletionStage<Result> getAll(Http.Request request) {
         // Run a db operation in another thread (using DatabaseExecutionContext)
         return userRepository.list().thenApplyAsync(users -> {
@@ -46,14 +56,13 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
-    public CompletionStage<Result> create(Http.Request request) {
-        JsonNode json = request.body().asJson();
-        final User user = Json.fromJson(json, User.class);
-        return userRepository.insert(user).thenApplyAsync(savedResource -> {
-            return created(Json.toJson(savedResource));
-        }, httpExecutionContext.current());
-    }
-
+    /**
+     * Get a User
+     *
+     * @param request
+     * @param id
+     * @return
+     */
     public CompletionStage<Result> get(Http.Request request, long id) {
 
         return userRepository.lookup(id).thenApplyAsync(optionalResource -> {
@@ -66,6 +75,27 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
+    /**
+     * Create a new User
+     *
+     * @param request
+     * @return CompletionStage<Result>
+     */
+    public CompletionStage<Result> create(Http.Request request) {
+        JsonNode json = request.body().asJson();
+        final User user = Json.fromJson(json, User.class);
+        return userRepository.insert(user).thenApplyAsync(savedResource -> {
+            return created(Json.toJson(savedResource));
+        }, httpExecutionContext.current());
+    }
+
+    /**
+     * Update a User
+     *
+     * @param request
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> update(Http.Request request, long id) {
         JsonNode json = request.body().asJson();
         User resource = Json.fromJson(json, User.class);
@@ -81,7 +111,12 @@ public class UserController extends Controller {
         }, httpExecutionContext.current());
     }
 
-
+    /**
+     * Delete a Issue
+     *
+     * @param id
+     * @return CompletionStage<Result>
+     */
     public CompletionStage<Result> delete(Long id) {
 
         return userRepository.delete(id).thenApplyAsync(savedResource -> {

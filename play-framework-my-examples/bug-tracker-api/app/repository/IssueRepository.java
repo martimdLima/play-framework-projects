@@ -34,6 +34,7 @@ public class IssueRepository {
      * @param sortBy   Computer property used for sorting
      * @param order    Sort order (either or asc or desc)
      * @param filter   Filter applied on the name column
+     * @return CCompletionStage<PagedList < Issue>>
      */
     public CompletionStage<PagedList<Issue>> page(int page, int pageSize, String sortBy, String order, String filter) {
         return supplyAsync(() ->
@@ -46,15 +47,47 @@ public class IssueRepository {
                         .findPagedList(), executionContext);
     }
 
+    /**
+     * Return a list of Issue
+     *
+     * @ return CompletionStage<List<Issue>>
+     */
     public CompletionStage<List<Issue>> list() {
         return supplyAsync(() ->
                 ebeanServer.find(Issue.class).findList(), executionContext);
     }
 
+    /**
+     * Retrieve a specific Issue
+     *
+     * @param id The id of the issue to retrieve
+     * @return CompletionStage<Optional < Issue>>
+     */
     public CompletionStage<Optional<Issue>> lookup(Long id) {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(Issue.class).setId(id).findOne()), executionContext);
     }
 
+    /**
+     * Creates a new Issue
+     *
+     * @param issue
+     * @return
+     */
+    public CompletionStage<Long> insert(Issue issue) {
+        return supplyAsync(() -> {
+            issue.id = System.currentTimeMillis(); // not ideal, but it works
+            ebeanServer.insert(issue);
+            return issue.id;
+        }, executionContext);
+    }
+
+    /**
+     * Updates a specific Issue
+     *
+     * @param id
+     * @param newIssueData
+     * @return CompletionStage<Optional < Long>>
+     */
     public CompletionStage<Optional<Long>> update(Long id, Issue newIssueData) {
         return supplyAsync(() -> {
             Transaction txn = ebeanServer.beginTransaction();
@@ -71,6 +104,7 @@ public class IssueRepository {
                     savedIssue.application = newIssueData.application;
                     savedIssue.category = newIssueData.category;
                     savedIssue.status = newIssueData.status;
+                    savedIssue.user = newIssueData.user;
 
                     savedIssue.update();
                     txn.commit();
@@ -83,6 +117,12 @@ public class IssueRepository {
         }, executionContext);
     }
 
+    /**
+     * Deletes a specific Issue
+     *
+     * @param id
+     * @return CompletionStage<Optional < Long>>
+     */
     public CompletionStage<Optional<Long>> delete(Long id) {
         return supplyAsync(() -> {
             try {
@@ -95,19 +135,21 @@ public class IssueRepository {
         }, executionContext);
     }
 
-    public CompletionStage<Long> insert(Issue issue) {
-        return supplyAsync(() -> {
-            issue.id = System.currentTimeMillis(); // not ideal, but it works
-            ebeanServer.insert(issue);
-            return issue.id;
-        }, executionContext);
-    }
-
-
+    /**
+     * Returns a List of Issue
+     *
+     * @return List<Issue>
+     */
     public List<Issue> getIssues() {
         return ebeanServer.find(Issue.class).findList();
     }
 
+    /**
+     * Returns a specific Issue
+     *
+     * @param id
+     * @return Issue
+     */
     public Issue getIssue(long id) {
         return ebeanServer.find(Issue.class).setId(id).findOne();
     }
