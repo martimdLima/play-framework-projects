@@ -26,7 +26,7 @@ public class Comment extends BaseModel {
     public Issue issue;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    public User user;
+    private User user;
 
 
     public Issue getIssue() {
@@ -35,13 +35,5 @@ public class Comment extends BaseModel {
 
     public void setIssue(Issue issue) {
         this.issue = issue;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
