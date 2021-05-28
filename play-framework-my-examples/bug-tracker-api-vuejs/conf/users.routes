@@ -1,0 +1,9 @@
+GET           /           api.UserController.getAll(request:Request)
+
+GET           /:id        api.UserController.get(request:Request, id:Long)
+
+POST          /           api.UserController.create(request:Request)
+
+PUT           /:id        api.UserController.update(request:Request, id:Long)
+
+DELETE        /:id        api.UserController.delete(id:Long)

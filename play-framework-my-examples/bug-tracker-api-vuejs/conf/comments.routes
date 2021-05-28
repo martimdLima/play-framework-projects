@@ -1,0 +1,10 @@
+GET           /           api.CommentController.getAll()
+
+GET           /:id        api.CommentController.get(request:Request, id:Long)
+
+POST          /           api.CommentController.create(request:Request)
+
+PUT           /:id        api.CommentController.update(request:Request, id:Long)
+
+DELETE        /:id        api.CommentController.delete(id:Long)
+
